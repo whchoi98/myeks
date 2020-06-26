@@ -1,0 +1,488 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "This is the data center automation configuration of the EKS virtual company.1 VPCs, 2AZs, 10.0.0.0/16"
+
+
+Metadata:
+  "AWS::CloudFormation::Interface":
+    ParameterGroups:
+      - Label:
+          default: "VPC Parameters"
+        Parameters:
+          - AvailabilityZoneA
+          - AvailabilityZoneB
+          - AvailabilityZoneC
+
+# AZ Parameters
+
+Parameters:
+  AvailabilityZoneA:
+    Description: "Choose AZ1 for your VPC.- Default Region : ap-northeast-2"
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: "ap-northeast-2"
+  AvailabilityZoneB:
+    Description: "Choose AZ2 for your VPC.- Default Region : ap-northeast-2"
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: "ap-northeast-2"
+  AvailabilityZoneC:
+    Description: "Choose AZ2 for your VPC.- Default Region : ap-northeast-2"
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: "ap-northeast-2"  
+  KeyPair:
+    Description: "Keypair to access the EC2 Instance"
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Default: "ekskey"
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+
+Resources:
+
+# EKS Resources - This VPC holds shared Services for all
+  
+  VPCEKS:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: "10.1.0.0/16"
+      EnableDnsSupport: "true"
+      EnableDnsHostnames: "true"
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: EKS
+        - Key: project
+          Value: CLUSTER01
+
+# Create VPCEKS-PublicSubnet A
+
+  PublicSubnetAEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.0.0/19"
+      AvailabilityZone: !Ref AvailabilityZoneA
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: EKS-Pub-A-Subnet
+
+# Create VPCEKS-PublicSubnet B
+
+  PublicSubnetBEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.32.0/19"
+      AvailabilityZone: !Ref AvailabilityZoneB
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: EKS-Pub-B-Subnet
+
+  PublicSubnetCEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.64.0/19"
+      AvailabilityZone: !Ref AvailabilityZoneC
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: EKS-Pub-C-Subnet
+# Create VPCBSEC-Public Route Table
+
+  PublicSubnetRouteTableEKS:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPCEKS
+      Tags:
+        - Key: Name
+          Value: EKS-Public RT
+
+# Public A Subnet Accsociate VPCEKS-Public Route Table
+
+  PublicASubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicSubnetRouteTableEKS
+      SubnetId: !Ref PublicSubnetAEKS
+
+# Public B Subnet Accsociate VPCEKS-Public Route Table
+
+  PublicBSubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicSubnetRouteTableEKS
+      SubnetId: !Ref PublicSubnetBEKS
+
+  PublicCSubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicSubnetRouteTableEKS
+      SubnetId: !Ref PublicSubnetCEKS
+
+# Create VPCEKS-PrivateSubnet A
+
+  PrivateSubnetAEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPCEKS
+      CidrBlock: "10.1.96.0/19"
+      AvailabilityZone: !Ref AvailabilityZoneA
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: EKS-Priv-A Subnet
+
+# Create VPCEKS-PrivateSubnet B
+
+  PrivateSubnetBEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.128.0/19"
+      AvailabilityZone: !Ref AvailabilityZoneB
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: EKS-Priv-B Subnet
+
+  PrivateSubnetCEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.160.0/19"
+      AvailabilityZone: !Ref AvailabilityZoneC
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: EKS-Priv-C Subnet
+
+# Create VPC-Private Route Table
+
+  PrivateSubnetRouteTableEKS:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPCEKS
+      Tags:
+        - Key: Name
+          Value: EKS-Private RT
+
+# Private A Subnet Accsociate VPC-Private Route Table
+
+  PrivateASubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateSubnetRouteTableEKS
+      SubnetId: !Ref PrivateSubnetAEKS
+
+# Private B Subnet Accsociate VPC-Private Route Table
+
+  PrivateBSubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateSubnetRouteTableEKS
+      SubnetId: !Ref PrivateSubnetBEKS
+
+# Private C Subnet Accsociate VPC-Private Route Table
+
+  PrivateCSubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateSubnetRouteTableEKS
+      SubnetId: !Ref PrivateSubnetCEKS
+
+# VPC ServerRole
+
+  ServerRoleEKS:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: EKS-SSMRole
+      Path: "/"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+
+  InstanceProfileEKS:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - !Ref ServerRoleEKS
+
+# VPCBSEC Security Group - ICMP , SSH Permit 
+  EKSEc2BastionSecGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Open-up ports for Bastion EC2
+      GroupName: EKS-Bastion-SG
+      VpcId: !Ref VPCEKS
+      SecurityGroupIngress:
+        - IpProtocol: icmp
+          CidrIp: 0.0.0.0/0
+          FromPort: "-1"
+          ToPort: "-1"
+        - IpProtocol: tcp
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: "80"
+          ToPort: "80"
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: EKS-Bastion-SG
+
+  ControlPlaneSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Cluster communication with worker nodes
+      VpcId: !Ref VPCEKS
+
+# VPCEKS EC2 Create
+
+  ServerBastionAEc2EKS:
+    Type: AWS::EC2::Instance
+    DependsOn: PublicSubnetAEKS
+    Properties:
+      SubnetId: !Ref PublicSubnetAEKS
+#     ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMI]
+      ImageId: !Ref LatestAmiId
+      InstanceType: t3.xlarge
+      SecurityGroupIds:
+        - Ref: EKSEc2BastionSecGroup
+      KeyName: !Ref KeyPair
+      IamInstanceProfile: !Ref InstanceProfileEKS
+      Tags:
+        - Key: Name
+          Value: EKS-Bastion-A
+      UserData:
+        Fn::Base64:
+          Fn::Sub: |
+            #!/bin/sh
+            sudo yum -y update
+            sudo yum -y install yum-utils 
+            sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+            sudo yum -y install iotop iperf3 iptraf tcpdump git bash-completion 
+            sudo yum -y install httpd php mysql php-mysql 
+            sudo yum -y install python-pip
+            sudo yum -y install nethogs iftop lnav nmon tmux wireshark
+            sudo systemctl start httpd
+            sudo systemctl enable httpd
+            cd /var/www/html/
+            sudo git clone https://github.com/whchoi98/ec2meta-webpage.git
+            sudo systemctl restart httpd
+            cd /home/ec2-user/
+            sudo git clone https://github.com/whchoi98/TGW_CF.git
+            cd /home/ec2-user/TGW_CF/
+            sudo -s
+            cat hostfile >> /etc/hosts
+            chmode 755 ./pingshell.sh
+            cd ~
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install --bin-dir /usr/bin --install-dir /usr/bin/aws-cli --update
+            curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+            source <(kubectl completion bash)
+            echo 'source <(kubectl completion bash)' >>~/.bashrc
+            echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            sudo mv /tmp/eksctl /usr/local/bin
+            . <(eksctl completion bash)
+            source ~/.bashrc
+            
+            exit
+# VPCEKS AttachSubnet Create
+
+  AttachSubnetAEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.241.0/24"
+      AvailabilityZone: !Ref AvailabilityZoneA
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: EKS-Attach-A Subnet
+
+  AttachSubnetBEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.242.0/24"
+      AvailabilityZone: !Ref AvailabilityZoneB
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: EKS-Attach-B Subnet
+
+  AttachSubnetCEKS:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCEKS
+      CidrBlock: "10.1.243.0/24"
+      AvailabilityZone: !Ref AvailabilityZoneC
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: EKS-Attach-C Subnet
+
+  AttachSubnetRouteTableEKS:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPCEKS
+      Tags:
+        - Key: Name
+          Value: EKS-Attach RT
+
+  AttachASubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AttachSubnetRouteTableEKS
+      SubnetId: !Ref AttachSubnetAEKS
+
+  AttachBSubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AttachSubnetRouteTableEKS
+      SubnetId: !Ref AttachSubnetBEKS
+
+  AttachCSubnetRouteTableAssociationEKS:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AttachSubnetRouteTableEKS
+      SubnetId: !Ref AttachSubnetCEKS
+
+  EndpointSecGroupEKS:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Open-up ports for local VPC
+      GroupName: EKS-EP-SG
+      VpcId: !Ref VPCEKS
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: "1"
+          ToPort: "65535"
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: udp
+          FromPort: "1"
+          ToPort: "65535"
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: EKS-EP-SG
+
+  SSMEndpointEKS:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId:
+        Ref: VPCEKS
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssm"
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: True
+      SubnetIds:
+        - Ref: AttachSubnetAEKS
+        - Ref: AttachSubnetBEKS
+        - Ref: AttachSubnetCEKS
+      SecurityGroupIds:
+        - Ref: EndpointSecGroupEKS
+
+  SSMMEndpointEKS:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref VPCEKS
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssmmessages"
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: True
+      SubnetIds:
+        - Ref: AttachSubnetAEKS
+        - Ref: AttachSubnetBEKS
+        - Ref: AttachSubnetCEKS
+      SecurityGroupIds:
+        - Ref: EndpointSecGroupEKS
+
+# Create EKS IGW
+
+  EKSInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: EKS-IGW
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPCEKS
+      InternetGatewayId: !Ref EKSInternetGateway
+
+  EKSDirectInternetRoute:
+    Type: AWS::EC2::Route
+    DependsOn: EKSInternetGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref EKSInternetGateway
+      RouteTableId: !Ref PublicSubnetRouteTableEKS
+
+# Creat EKS NAT GateWay
+
+  EKSNATEIP:
+    Type: "AWS::EC2::EIP"
+    Properties:
+      Domain: vpc
+
+  EKSNATGateway:
+    DependsOn: AttachGateway
+    Type: "AWS::EC2::NatGateway"
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - EKSNATEIP
+          - AllocationId
+      SubnetId: !Ref PublicSubnetAEKS
+      Tags:
+        - Key: Name
+          Value: EKS-NATGW
+
+  EKSNATInternetRouteAttach:
+    Type: AWS::EC2::Route
+    DependsOn: EKSInternetGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref EKSNATGateway
+      RouteTableId: !Ref AttachSubnetRouteTableEKS
+
+  EKSNATInternetRoutePrivate:
+    Type: AWS::EC2::Route
+    DependsOn: EKSInternetGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref EKSNATGateway
+      RouteTableId: !Ref PrivateSubnetRouteTableEKS
+
+Outputs:
+
+  SubnetIds:
+    Description: Subnets IDs in the VPC
+    Value: !Join [ ",", [ !Ref PublicSubnetAEKS, !Ref PublicSubnetBEKS, !Ref PublicSubnetCEKS, !Ref PrivateSubnetAEKS, !Ref PrivateSubnetBEKS, !Ref PrivateSubnetCEKS ] ]
+
+  SecurityGroups:
+    Description: Security group for the cluster control plane communication with worker nodes
+    Value: !Join [ ",", [ !Ref ControlPlaneSecurityGroup ] ]
+
+  VpcId:
+    Description: The VPC Id
+    Value: !Ref VPCEKS

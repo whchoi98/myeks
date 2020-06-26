@@ -1,0 +1,72 @@
+# A simple example of ClusterConfig object:
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks01
+  region: ap-northeast-2
+
+vpc: 
+  id: vpc-020776ae978d4c31d
+  subnets:
+    public:
+      ap-northeast-2a: { id: subnet-0da076e4073833805}
+      ap-northeast-2b: { id: subnet-01f872089f0a072cc}
+      ap-northeast-2c: { id: subnet-0c46c4c5bed798bcc}
+    private:
+      ap-northeast-2a: { id: subnet-0eb7b43137580d9bc}
+      ap-northeast-2b: { id: subnet-09237447412e57101}
+      ap-northeast-2c: { id: subnet-08a7897d92cf185e1}
+
+
+nodeGroups:
+  - name: ng1-public
+    instanceType: m5.xlarge
+    desiredCapacity: 3
+    minSize: 3
+    maxSize: 9
+    volumeSize: 30
+    volumeType: gp2 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: "frontend-workloads"
+    ssh: 
+        publicKeyPath: "~/Dropbox/01.AWS/aws_keypair/ekskey.pub"
+        allow: true
+    iam:
+      attachPolicyARNs:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+
+  - name: ng2-private
+    instanceType: m5.xlarge
+    desiredCapacity: 3
+    privateNetworking: true
+    minSize: 3
+    maxSize: 9
+    volumeSize: 30
+    volumeType: gp2 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: "backend-workloads"
+    ssh: 
+        publicKeyPath: "~/Dropbox/01.AWS/aws_keypair/ekskey.pub"
+        allow: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+
+
+cloudWatch:
+    clusterLogging:
+        enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
