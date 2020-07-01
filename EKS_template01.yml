@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "This is the data center automation configuration of the EKS virtual company.1 VPCs, 2AZs, 10.0.0.0/16"
+Description: "This is the data center automation configuration of the EKS virtual company.1 VPCs, 3AZs, 10.1.0.0/16"
 
 
 Metadata:
@@ -258,6 +258,7 @@ Resources:
       SubnetId: !Ref PublicSubnetAEKS
 #     ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMI]
       ImageId: !Ref LatestAmiId
+      PrivateIpAddress: 10.1.0.100
       InstanceType: t3.xlarge
       SecurityGroupIds:
         - Ref: EKSEc2BastionSecGroup
