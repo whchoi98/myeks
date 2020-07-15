@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "This is the data center automation configuration of the EKS virtual company.1 VPCs, 3AZs, 10.11.0.0/16"
+Description: "This is the data center automation configuration of the EKS virtual company.1 VPCs, 3AZs, 10.1.0.0/16"
 
 
 Metadata:
@@ -42,7 +42,7 @@ Resources:
   VPCEKS:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: "10.11.0.0/16"
+      CidrBlock: "10.1.0.0/16"
       EnableDnsSupport: "true"
       EnableDnsHostnames: "true"
       InstanceTenancy: default
@@ -58,7 +58,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.0.0/19"
+      CidrBlock: "10.1.0.0/19"
       AvailabilityZone: !Ref AvailabilityZoneA
       MapPublicIpOnLaunch: true
       Tags:
@@ -71,7 +71,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.32.0/19"
+      CidrBlock: "10.1.32.0/19"
       AvailabilityZone: !Ref AvailabilityZoneB
       MapPublicIpOnLaunch: true
       Tags:
@@ -82,7 +82,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.64.0/19"
+      CidrBlock: "10.1.64.0/19"
       AvailabilityZone: !Ref AvailabilityZoneC
       MapPublicIpOnLaunch: true
       Tags:
@@ -127,7 +127,7 @@ Resources:
     Properties:
       VpcId:
         Ref: VPCEKS
-      CidrBlock: "10.11.96.0/19"
+      CidrBlock: "10.1.96.0/19"
       AvailabilityZone: !Ref AvailabilityZoneA
       MapPublicIpOnLaunch: false
       Tags:
@@ -140,7 +140,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.128.0/19"
+      CidrBlock: "10.1.128.0/19"
       AvailabilityZone: !Ref AvailabilityZoneB
       MapPublicIpOnLaunch: false
       Tags:
@@ -151,7 +151,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.160.0/19"
+      CidrBlock: "10.1.160.0/19"
       AvailabilityZone: !Ref AvailabilityZoneC
       MapPublicIpOnLaunch: false
       Tags:
@@ -258,7 +258,7 @@ Resources:
       SubnetId: !Ref PublicSubnetAEKS
 #     ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMI]
       ImageId: !Ref LatestAmiId
-      PrivateIpAddress: 10.11.0.100
+      PrivateIpAddress: 10.1.0.100
       InstanceType: t3.xlarge
       SecurityGroupIds:
         - Ref: EKSEc2BastionSecGroup
@@ -311,7 +311,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.241.0/24"
+      CidrBlock: "10.1.241.0/24"
       AvailabilityZone: !Ref AvailabilityZoneA
       MapPublicIpOnLaunch: false
       Tags:
@@ -322,7 +322,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.242.0/24"
+      CidrBlock: "10.1.242.0/24"
       AvailabilityZone: !Ref AvailabilityZoneB
       MapPublicIpOnLaunch: false
       Tags:
@@ -333,7 +333,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPCEKS
-      CidrBlock: "10.11.243.0/24"
+      CidrBlock: "10.1.243.0/24"
       AvailabilityZone: !Ref AvailabilityZoneC
       MapPublicIpOnLaunch: false
       Tags:
