@@ -4,7 +4,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: eks01
+  name: eks02
   region: ap-northeast-2
 
 vpc: 
