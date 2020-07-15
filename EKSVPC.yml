@@ -63,7 +63,7 @@ Resources:
       EnableDnsHostnames: true
       Tags:
       - Key: Name
-        Value: !Sub '${AWS::StackName}-VPC'
+        Value: !Sub '${AWS::StackName}'
 
   InternetGateway:
     Type: "AWS::EC2::InternetGateway"
@@ -262,7 +262,7 @@ Resources:
       MapPublicIpOnLaunch: true
       AvailabilityZone:
         Fn::Select:
-        - '1'
+        - '2'
         - Fn::GetAZs:
             Ref: AWS::Region
       CidrBlock:
@@ -322,7 +322,7 @@ Resources:
     Properties:
       AvailabilityZone:
         Fn::Select:
-        - '1'
+        - '2'
         - Fn::GetAZs:
             Ref: AWS::Region
       CidrBlock:

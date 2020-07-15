@@ -8,16 +8,16 @@ metadata:
   region: ap-northeast-2
 
 vpc: 
-  id: vpc-020776ae978d4c31d
+  id: vpc-099a900fe8dde7319
   subnets:
     public:
-      ap-northeast-2a: { id: subnet-0da076e4073833805}
-      ap-northeast-2b: { id: subnet-01f872089f0a072cc}
-      ap-northeast-2c: { id: subnet-0c46c4c5bed798bcc}
+      ap-northeast-2a: { id: subnet-0e85e68a85894cf50}
+      ap-northeast-2b: { id: subnet-0b8a862c807869d6b}
+      ap-northeast-2c: { id: subnet-019d103bacc5dcb21}
     private:
-      ap-northeast-2a: { id: subnet-0eb7b43137580d9bc}
-      ap-northeast-2b: { id: subnet-09237447412e57101}
-      ap-northeast-2c: { id: subnet-08a7897d92cf185e1}
+      ap-northeast-2a: { id: subnet-0eb13d8b433c106a2}
+      ap-northeast-2b: { id: subnet-0b188593b2d1755ce}
+      ap-northeast-2c: { id: subnet-0a7fb1ebc6b148035}
 
 
 nodeGroups:
@@ -32,7 +32,7 @@ nodeGroups:
     labels:
       nodegroup-type: "frontend-workloads"
     ssh: 
-        publicKeyPath: "~/Dropbox/01.AWS/aws_keypair/ekskey.pub"
+        publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
         allow: true
     iam:
       attachPolicyARNs:
@@ -55,7 +55,7 @@ nodeGroups:
     labels:
       nodegroup-type: "backend-workloads"
     ssh: 
-        publicKeyPath: "~/Dropbox/01.AWS/aws_keypair/ekskey.pub"
+        publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
         allow: true
     iam:
       withAddonPolicies:
