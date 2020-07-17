@@ -5,7 +5,7 @@ kind: ClusterConfig
 
 metadata:
   name: eks02
-  region: ap-northeast-2
+  region: ${AWS_REGION}
 
 vpc: 
   id: vpc-01a615429474fa46d
@@ -19,6 +19,8 @@ vpc:
       ap-northeast-2b: { id: subnet-085dbe642d4a53605}
       ap-northeast-2c: { id: subnet-0c5193ee433da4b7c}
 
+secretsEncryption:
+  keyARN: ${MASTER_ARN}
 
 nodeGroups:
   - name: ng1-public
