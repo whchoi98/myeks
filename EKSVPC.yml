@@ -142,10 +142,10 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway02
 
-  PrivateRoute02:
+  PrivateRoute03:
     DependsOn:
     - VPCGatewayAttachment
-    - NatGateway02
+    - NatGateway03
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PrivateRouteTable03
@@ -215,7 +215,7 @@ Resources:
   PublicSubnet01:
     Type: AWS::EC2::Subnet
     Metadata:
-      Comment: Subnet 01
+      Comment: Public Subnet 01
     Properties:
       MapPublicIpOnLaunch: true
       AvailabilityZone:
@@ -236,7 +236,7 @@ Resources:
   PublicSubnet02:
     Type: AWS::EC2::Subnet
     Metadata:
-      Comment: Subnet 02
+      Comment: Public Subnet 02
     Properties:
       MapPublicIpOnLaunch: true
       AvailabilityZone:
@@ -257,7 +257,7 @@ Resources:
   PublicSubnet03:
     Type: AWS::EC2::Subnet
     Metadata:
-      Comment: Subnet 03
+      Comment: Public Subnet 03
     Properties:
       MapPublicIpOnLaunch: true
       AvailabilityZone:
@@ -278,7 +278,7 @@ Resources:
   PrivateSubnet01:
     Type: AWS::EC2::Subnet
     Metadata:
-      Comment: Subnet 03
+      Comment: Private Subnet 01
     Properties:
       AvailabilityZone:
         Fn::Select:
