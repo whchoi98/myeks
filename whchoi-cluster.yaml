@@ -70,5 +70,5 @@ nodeGroups:
 
 cloudWatch:
     clusterLogging:
-        enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+        enableTypes: ["*"]
 
