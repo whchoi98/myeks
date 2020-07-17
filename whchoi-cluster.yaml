@@ -8,16 +8,16 @@ metadata:
   region: ap-northeast-2
 
 vpc: 
-  id: vpc-099a900fe8dde7319
+  id: vpc-01a615429474fa46d
   subnets:
     public:
-      ap-northeast-2a: { id: subnet-0e85e68a85894cf50}
-      ap-northeast-2b: { id: subnet-0b8a862c807869d6b}
-      ap-northeast-2c: { id: subnet-019d103bacc5dcb21}
+      ap-northeast-2a: { id: subnet-068c522d7033aa0cc}
+      ap-northeast-2b: { id: subnet-09fa153149b30078f}
+      ap-northeast-2c: { id: subnet-04804e7df4c1b9ad5}
     private:
-      ap-northeast-2a: { id: subnet-0eb13d8b433c106a2}
-      ap-northeast-2b: { id: subnet-0b188593b2d1755ce}
-      ap-northeast-2c: { id: subnet-0a7fb1ebc6b148035}
+      ap-northeast-2a: { id: ubnet-05cd7a05f94c7bcad}
+      ap-northeast-2b: { id: subnet-085dbe642d4a53605}
+      ap-northeast-2c: { id: subnet-0c5193ee433da4b7c}
 
 
 nodeGroups:
