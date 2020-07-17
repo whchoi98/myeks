@@ -15,7 +15,7 @@ vpc:
       ap-northeast-2b: { id: subnet-09fa153149b30078f}
       ap-northeast-2c: { id: subnet-04804e7df4c1b9ad5}
     private:
-      ap-northeast-2a: { id: ubnet-05cd7a05f94c7bcad}
+      ap-northeast-2a: { id: subnet-05cd7a05f94c7bcad}
       ap-northeast-2b: { id: subnet-085dbe642d4a53605}
       ap-northeast-2c: { id: subnet-0c5193ee433da4b7c}
 
