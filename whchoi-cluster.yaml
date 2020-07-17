@@ -4,7 +4,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: eks02
+  name: eksworkshop
   region: ${AWS_REGION}
 
 vpc: 
