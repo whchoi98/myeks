@@ -5,7 +5,7 @@ kind: ClusterConfig
 
 metadata:
   name: eksworkshop
-  region: ${AWS_REGION}
+  region: ap-northeast-2
 
 vpc: 
   id: vpc-01a615429474fa46d
