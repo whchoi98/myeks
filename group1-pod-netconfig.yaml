@@ -1,0 +1,9 @@
+apiVersion: crd.k8s.amazonaws.com/v1alpha1
+kind: ENIConfig
+metadata:
+ name: group1-pod-netconfig
+spec:
+ subnet: subnet-0ef2de2d3c6504a3f
+ securityGroups:
+ - sg-0db3cb147dca2658b
+ - sg-0df26a1d81042cc02

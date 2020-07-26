@@ -9,9 +9,9 @@ spec:
       role: frontend
   ingress:
     - from:
-        - <EDIT: UPDATE WITH THE CONFIGURATION NEEDED TO WHITELEST CLIENT USING PODSELECTOR>
-            <EDIT: UPDATE WITH THE CONFIGURATION NEEDED TO WHITELEST CLIENT USING PODSELECTOR>
-              <EDIT: UPDATE WITH THE CONFIGURATION NEEDED TO WHITELEST CLIENT USING PODSELECTOR>
+        - namespaceSelector:
+            matchLabels:
+              role: client
       ports:
         - protocol: TCP
           port: 80
