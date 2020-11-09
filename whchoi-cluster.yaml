@@ -14,10 +14,10 @@ vpc:
       ap-northeast-2a: { id: subnet-068c522d7033aa0cc}
       ap-northeast-2b: { id: subnet-09fa153149b30078f}
       ap-northeast-2c: { id: subnet-04804e7df4c1b9ad5}
-#    private:
-#      ap-northeast-2a: { id: subnet-05cd7a05f94c7bcad}
-#      ap-northeast-2b: { id: subnet-085dbe642d4a53605}
-#      ap-northeast-2c: { id: subnet-0c5193ee433da4b7c}
+    private:
+      ap-northeast-2a: { id: subnet-05cd7a05f94c7bcad}
+      ap-northeast-2b: { id: subnet-085dbe642d4a53605}
+      ap-northeast-2c: { id: subnet-0c5193ee433da4b7c}
 
 secretsEncryption:
   keyARN: ${MASTER_ARN}
@@ -45,28 +45,27 @@ nodeGroups:
         fsx: true
         efs: true
 
-#  - name: ng2-private
-#    instanceType: m5.xlarge
-#    desiredCapacity: 3
-#    privateNetworking: true
-#    minSize: 3
-#    maxSize: 9
-#    volumeSize: 100
-#    volumeType: gp2 
-#    amiFamily: AmazonLinux2
-#    labels:
-#      nodegroup-type: "backend-workloads"
-#    ssh: 
-#        publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
-#        allow: true
-#    iam:
-#      withAddonPolicies:
-#        autoScaler: true
-#        cloudWatch: true
-#        ebs: true
-#        fsx: true
-#        efs: true
-
+  - name: ng2-private
+    instanceType: m5.xlarge
+    desiredCapacity: 3
+    privateNetworking: true
+    minSize: 3
+    maxSize: 9
+    volumeSize: 100
+    volumeType: gp2 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: "backend-workloads"
+    ssh: 
+        publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
+        allow: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
 
 cloudWatch:
     clusterLogging:
