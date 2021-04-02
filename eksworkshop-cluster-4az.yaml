@@ -6,20 +6,21 @@ kind: ClusterConfig
 metadata:
   name: eksworkshop
   region: ap-northeast-2
+  version: "1.19"
 
 vpc: 
   id: vpc-01a615429474fa46d
   subnets:
-    private:
-      ap-northeast-2a: { id: subnet-0914eefaede7a14c9}
-      ap-northeast-2b: { id: subnet-0e49bdf1a4b2a0f6a}
-      ap-northeast-2c: { id: subnet-01db4b6773a94e6a2}
-      ap-northeast-2d: { id: subnet-034369344c2f8e598}
     public:
       ap-northeast-2a: { id: subnet-0396e3d1dfe08d224}
       ap-northeast-2b: { id: subnet-0db014e6a52f7b002}
       ap-northeast-2c: { id: subnet-01a18de77c71a9d8d}
       ap-northeast-2d: { id: subnet-0786a534253c21a1e}
+    private:
+      ap-northeast-2a: { id: subnet-0914eefaede7a14c9}
+      ap-northeast-2b: { id: subnet-0e49bdf1a4b2a0f6a}
+      ap-northeast-2c: { id: subnet-01db4b6773a94e6a2}
+      ap-northeast-2d: { id: subnet-034369344c2f8e598}
 
 secretsEncryption:
   keyARN: ${MASTER_ARN}
