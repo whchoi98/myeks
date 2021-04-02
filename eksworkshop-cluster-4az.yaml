@@ -1,0 +1,75 @@
+# A simple example of ClusterConfig object:
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eksworkshop
+  region: ap-northeast-2
+
+vpc: 
+  id: vpc-01a615429474fa46d
+  subnets:
+    private:
+      ap-northeast-2a: { id: subnet-0914eefaede7a14c9}
+      ap-northeast-2b: { id: subnet-0e49bdf1a4b2a0f6a}
+      ap-northeast-2c: { id: subnet-01db4b6773a94e6a2}
+      ap-northeast-2d: { id: subnet-034369344c2f8e598}
+    public:
+      ap-northeast-2a: { id: subnet-0396e3d1dfe08d224}
+      ap-northeast-2b: { id: subnet-0db014e6a52f7b002}
+      ap-northeast-2c: { id: subnet-01a18de77c71a9d8d}
+      ap-northeast-2d: { id: subnet-0786a534253c21a1e}
+
+secretsEncryption:
+  keyARN: ${MASTER_ARN}
+
+nodeGroups:
+  - name: ng-public-01
+    instanceType: m5.xlarge
+    desiredCapacity: 4
+    minSize: 4
+    maxSize: 8
+    volumeSize: 100
+    volumeType: gp3 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: "frontend-workloads"
+    ssh: 
+        publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
+        allow: true
+    iam:
+      attachPolicyARNs:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+
+  - name: ng-private-01
+    instanceType: m5.xlarge
+    desiredCapacity: 4
+    privateNetworking: true
+    minSize: 4
+    maxSize: 8
+    volumeSize: 100
+    volumeType: gp3 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: "backend-workloads"
+    ssh: 
+        publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
+        allow: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+
+cloudWatch:
+    clusterLogging:
+        enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
