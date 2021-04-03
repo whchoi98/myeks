@@ -9,21 +9,21 @@ metadata:
   version: "1.19"
 
 vpc: 
-  id: vpc-01a615429474fa46d
+  id: vpc-0872d2a79110e4289
   subnets:
     public:
-      ap-northeast-2a: { id: subnet-0396e3d1dfe08d224}
-      ap-northeast-2b: { id: subnet-0db014e6a52f7b002}
-      ap-northeast-2c: { id: subnet-01a18de77c71a9d8d}
-      ap-northeast-2d: { id: subnet-0786a534253c21a1e}
+      ap-northeast-2a: { id: subnet-07b001f1937567fb7}
+      ap-northeast-2b: { id: subnet-03811b74f76270aed}
+      ap-northeast-2c: { id: subnet-02ce8af3b04458b8f}
+      ap-northeast-2d: { id: subnet-0c23440ad2800c0ef}
     private:
-      ap-northeast-2a: { id: subnet-0914eefaede7a14c9}
-      ap-northeast-2b: { id: subnet-0e49bdf1a4b2a0f6a}
-      ap-northeast-2c: { id: subnet-01db4b6773a94e6a2}
-      ap-northeast-2d: { id: subnet-034369344c2f8e598}
+      ap-northeast-2a: { id: subnet-0074fd1438d35d4ef}
+      ap-northeast-2b: { id: subnet-0c82a7e8f40fa4268}
+      ap-northeast-2c: { id: subnet-083b57160bcdc8320}
+      ap-northeast-2d: { id: subnet-0693a31f5373e153b}
 
 secretsEncryption:
-  keyARN: ${MASTER_ARN}
+  keyARN: arn:aws:kms:ap-northeast-2:584172017494:key/25a2f579-9f22-4d79-ad6f-1a468d06244b
 
 nodeGroups:
   - name: ng-public-01
