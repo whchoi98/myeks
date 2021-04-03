@@ -13,15 +13,12 @@ Metadata:
           - AvailabilityZoneA
           - AvailabilityZoneB
           - AvailabilityZoneC
-          - AvailabilityZoneD
           - PublicSubnet01Block
           - PublicSubnet02Block
           - PublicSubnet03Block
-          - PublicSubnet04Block
           - PrivateSubnet01Block
           - PrivateSubnet02Block
           - PrivateSubnet03Block
-          - PrivateSubnet04Block
 
 Parameters:
 
@@ -45,11 +42,6 @@ Parameters:
     Type: AWS::EC2::AvailabilityZone::Name
     Default: "ap-northeast-2c"
 
-  AvailabilityZoneD:
-    Description: "Choose AZ2 for your VPC."
-    Type: AWS::EC2::AvailabilityZone::Name
-    Default: "ap-northeast-2d"
-
   PublicSubnet01Block:
     Type: String
     Default: 10.11.0.0/20
@@ -65,11 +57,6 @@ Parameters:
     Default: 10.11.32.0/20
     Description: CidrBlock for public subnet 03 within the VPC
 
-  PublicSubnet04Block:
-    Type: String
-    Default: 10.11.48.0/20
-    Description: CidrBlock for public subnet 04 within the VPC
-
   PrivateSubnet01Block:
     Type: String
     Default: 10.11.64.0/20
@@ -84,11 +71,6 @@ Parameters:
     Type: String
     Default: 10.11.96.0/20
     Description: CidrBlock for private subnet 03 within the VPC
-
-  PrivateSubnet04Block:
-    Type: String
-    Default: 10.11.112.0/20
-    Description: CidrBlock for private subnet 04 within the VPC
 
 
 Resources:
@@ -173,21 +155,6 @@ Resources:
       - Key: kubernetes.io/role/elb
         Value: 1
 
-  PublicSubnet04:
-    Type: AWS::EC2::Subnet
-    Metadata:
-      Comment: Public Subnet 04
-    Properties:
-    Properties:
-      VpcId: !Ref VPC
-      CidrBlock: !Ref PublicSubnet04Block
-      AvailabilityZone: !Ref AvailabilityZoneD
-      MapPublicIpOnLaunch: "true"
-      Tags:
-      - Key: Name
-        Value: !Sub "${AWS::StackName}-PublicSubnet04"
-      - Key: kubernetes.io/role/elb
-        Value: 1
 
 #####################################################################
 # Create-Public-RouteTable:
@@ -222,12 +189,6 @@ Resources:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet03
-      RouteTableId: !Ref PublicRouteTable
-
-  PublicSubnet04RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref PublicSubnet04
       RouteTableId: !Ref PublicRouteTable
 
 ################################################################################################
@@ -283,19 +244,6 @@ Resources:
       - Key: Name
         Value: !Sub '${AWS::StackName}-NatGatewayAZ3'
 
-  NatGateway04:
-    DependsOn:
-    - NatGatewayEIP4
-    - PublicSubnet04
-    - VPCGatewayAttachment
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt 'NatGatewayEIP4.AllocationId'
-      SubnetId: !Ref PublicSubnet04
-      Tags:
-      - Key: Name
-        Value: !Sub '${AWS::StackName}-NatGatewayAZ4'
-
   NatGatewayEIP1:
     DependsOn:
     - VPCGatewayAttachment
@@ -317,12 +265,6 @@ Resources:
     Properties:
       Domain: vpc
 
-  NatGatewayEIP4:
-    DependsOn:
-    - VPCGatewayAttachment
-    Type: 'AWS::EC2::EIP'
-    Properties:
-      Domain: vpc
 ########################################################
 # Create-Security-Group : ControlPlane
 ########################################################
@@ -402,21 +344,6 @@ Resources:
       - Key: kubernetes.io/role/internal-elb
         Value: 1
 
-  PrivateSubnet04:
-    Type: AWS::EC2::Subnet
-    Metadata:
-      Comment: Private Subnet 04
-    Properties:
-      VpcId: !Ref VPC
-      CidrBlock: !Ref PrivateSubnet04Block
-      AvailabilityZone: !Ref AvailabilityZoneD
-      MapPublicIpOnLaunch: "true"
-      Tags:
-      - Key: Name
-        Value: !Sub "${AWS::StackName}-PrivateSubnet04"
-      - Key: kubernetes.io/role/internal-elb
-        Value: 1
-
 #####################################################################
 # Create-Private-RouteTable: PrivateRT01,02,03,04
 #####################################################################
@@ -450,16 +377,7 @@ Resources:
       - Key: Network
         Value: PrivateRT03
 
-  PrivateRouteTable04:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId: !Ref VPC
-      Tags:
-      - Key: Name
-        Value: Private Subnet AZ4
-      - Key: Network
-        Value: PrivateRT04
-        
+       
 ################################################################################################
 # Associate-Private-RouteTable: VPC_Private_Subnet_a,b Accsociate VPC_Private_RouteTable #
 ################################################################################################
@@ -481,12 +399,6 @@ Resources:
     Properties:
       SubnetId: !Ref PrivateSubnet03
       RouteTableId: !Ref PrivateRouteTable03
-
-  PrivateSubnet04RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref PrivateSubnet04
-      RouteTableId: !Ref PrivateRouteTable04
 
 ################################################################################################
 # Create Prviate Routing Table
@@ -521,16 +433,6 @@ Resources:
       RouteTableId: !Ref PrivateRouteTable03
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway03
-
-  PrivateRoute04:
-    DependsOn:
-    - VPCGatewayAttachment
-    - NatGateway04
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable04
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway04
 
 ######################################################################
 # Create-System-Manager-Endpoint: Create VPC SystemManager Endpoint #
@@ -588,10 +490,6 @@ Outputs:
     Description: PublicSubnet03 ID in the VPC
     Value: !Ref PublicSubnet03
 
-  PublicSubnet04:
-    Description: PublicSubnet03 ID in the VPC
-    Value: !Ref PublicSubnet04
-  
   PrivateSubnet01:
     Description: PrivateSubnet01 ID in the VPC
     Value: !Ref PrivateSubnet01
@@ -603,10 +501,6 @@ Outputs:
   PrivateSubnet03:
     Description: PrivateSubnet03 ID in the VPC
     Value: !Ref PrivateSubnet03
-
-  PrivateSubnet04:
-    Description: PrivateSubnet04 ID in the VPC
-    Value: !Ref PrivateSubnet04
 
   SecurityGroups:
     Description: Security group for the cluster control plane communication with worker nodes
