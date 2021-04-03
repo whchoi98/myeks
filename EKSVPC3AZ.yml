@@ -449,7 +449,6 @@ Resources:
         - Ref: PrivateSubnet01
         - Ref: PrivateSubnet02
         - Ref: PrivateSubnet03
-        - Ref: PrivateSubnet04
       SecurityGroupIds:
         - Ref: SSMSG
 
@@ -464,7 +463,6 @@ Resources:
         - Ref: PrivateSubnet01
         - Ref: PrivateSubnet02
         - Ref: PrivateSubnet03
-        - Ref: PrivateSubnet04
       SecurityGroupIds:
         - Ref: SSMSG
 
