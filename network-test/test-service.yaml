@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpine-app
+  namespace: network-test
+spec:
+  selector:
+    app: alpine-app
+#  type: LoadBalancer
+  ports:
+   -  protocol: TCP
+      port: 8080
+      targetPort: 80
+
+
