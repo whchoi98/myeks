@@ -21,7 +21,7 @@ vpc:
       ap-northeast-2c: { id: subnet-0cab7fc5ccffe7f89}
 
 secretsEncryption:
-  keyARN: arn:aws:kms:ap-northeast-2:584172017494:key/25a2f579-9f22-4d79-ad6f-1a468d06244b
+  keyARN: 
 
 nodeGroups:
   - name: ng-public-01
