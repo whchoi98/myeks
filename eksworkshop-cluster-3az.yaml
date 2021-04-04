@@ -26,9 +26,9 @@ secretsEncryption:
 nodeGroups:
   - name: ng-public-01
     instanceType: m5.xlarge
-    desiredCapacity: 4
-    minSize: 4
-    maxSize: 8
+    desiredCapacity: 3
+    minSize: 3
+    maxSize: 6
     volumeSize: 100
     volumeType: gp3 
     amiFamily: AmazonLinux2
@@ -48,10 +48,10 @@ nodeGroups:
 
   - name: ng-private-01
     instanceType: m5.xlarge
-    desiredCapacity: 4
+    desiredCapacity: 3
     privateNetworking: true
-    minSize: 4
-    maxSize: 8
+    minSize: 3
+    maxSize: 9
     volumeSize: 100
     volumeType: gp3 
     amiFamily: AmazonLinux2
