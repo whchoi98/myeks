@@ -1,0 +1,40 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::584172017494:role/eksctl-eksworkshop-nodegroup-mana-NodeInstanceRole-1VEXSSMR1CWJ0
+      username: system:node:{{EC2PrivateDNSName}}
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::584172017494:role/eksctl-eksworkshop-nodegroup-mana-NodeInstanceRole-1SYQ7SFAJFYQX
+      username: system:node:{{EC2PrivateDNSName}}
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::584172017494:role/eksctl-eksworkshop-nodegroup-ng-p-NodeInstanceRole-S7BXB5A9FVBG
+      username: system:node:{{EC2PrivateDNSName}}
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::584172017494:role/eksctl-eksworkshop-nodegroup-ng-p-NodeInstanceRole-83YEOE9PLC79
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::584172017494:user/whchoi98
+      username: whchoi98
+      groups:
+        - system:masters
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2021-04-04T09:13:33Z"
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "2300"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/aws-auth
+  uid: 8b075a8b-4513-45e8-aec3-f83f139ad46f

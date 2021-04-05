@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alpine-app-01
+  name: alpine-app-02
   labels:
-    app: alpine-app-01
+    app: alpine-app-02
 #name space change 
   namespace: network-test
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: alpine-app-01
+      app: alpine-app-02
   template:
     metadata:
       labels:
-        app: alpine-app-01
+        app: alpine-app-02
     spec:
       containers:
-      - image: public.ecr.aws/t6o5t2h8/multitool:1
+      - image: praqma/network-multitool
         imagePullPolicy: Always
-        name: alpine-app
-#        ports:
-#        - containerPort: 3000
-#          protocol: TCP
+        name: alpine-app-02
+        ports:
+        - containerPort: 80
+          protocol: TCP
 #add nodeSelector
       nodeSelector:
         nodegroup-type: "frontend-workloads"

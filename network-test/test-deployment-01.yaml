@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alpine-app
+  name: alpine-app-01
   labels:
-    app: alpine-app
+    app: alpine-app-01
 #name space change 
   namespace: network-test
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: alpine-app
+      app: alpine-app-01
   template:
     metadata:
       labels:
-        app: alpine-app
+        app: alpine-app-01
     spec:
       containers:
       - image: praqma/network-multitool
         imagePullPolicy: Always
-        name: alpine-app
+        name: alpine-app-01
         ports:
         - containerPort: 80
           protocol: TCP
