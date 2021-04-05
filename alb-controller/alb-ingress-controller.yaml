@@ -36,7 +36,7 @@ spec:
             # Name of your cluster. Used when naming resources created
             # by the ALB Ingress Controller, providing distinction between
             # clusters.
-            # - --cluster-name=devCluster
+            - --cluster-name=eksworkshop
 
             # AWS VPC ID this ingress controller will use to create AWS resources.
             # If unspecified, it will be discovered from ec2metadata.
@@ -45,7 +45,7 @@ spec:
             # AWS region this ingress controller will operate in.
             # If unspecified, it will be discovered from ec2metadata.
             # List of regions: http://docs.aws.amazon.com/general/latest/gr/rande.html#vpc_region
-            # - --aws-region=us-west-1
+            - --aws-region=ap-northeast-2
 
             # Enables logging on all outbound requests sent to the AWS API.
             # If logging is desired, set to true.

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine-app-01
+  labels:
+    app: alpine-app-01
+#name space change 
+  namespace: network-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alpine-app-01
+  template:
+    metadata:
+      labels:
+        app: alpine-app-01
+    spec:
+      containers:
+      - image: public.ecr.aws/t6o5t2h8/multitool:1
+        imagePullPolicy: Always
+        name: alpine-app
+#        ports:
+#        - containerPort: 3000
+#          protocol: TCP
+#add nodeSelector
+      nodeSelector:
+        nodegroup-type: "frontend-workloads"

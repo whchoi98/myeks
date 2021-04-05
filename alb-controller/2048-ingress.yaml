@@ -6,8 +6,9 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
-  labels:
-    app: 2048-ingress
+    alb.ingress.kubernetes.io/target-type: ip
+#  labels:
+#    app: 2048-ingress
 spec:
   rules:
     - http:
