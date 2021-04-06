@@ -320,7 +320,7 @@ Resources:
       PrivateDnsEnabled: True
       SubnetIds: 
         - Ref: PrivateSubnet01
-        - Ref: PrivateSubnet02
+
       SecurityGroupIds:
         - Ref: SSMSG
 
@@ -333,7 +333,7 @@ Resources:
       PrivateDnsEnabled: True
       SubnetIds: 
         - Ref: PrivateSubnet01
-        - Ref: PrivateSubnet02
+
       SecurityGroupIds:
         - Ref: SSMSG
 
