@@ -22,7 +22,7 @@ spec:
         app: ecsdemo-crystal
     spec:
       containers:
-      - image: {{ .Values.frontend.image }}:{{ .Values.version }}
+      - image: {{ .Values.crystal.image }}:{{ .Values.version }}
         imagePullPolicy: Always
         name: ecsdemo-crystal
         ports:

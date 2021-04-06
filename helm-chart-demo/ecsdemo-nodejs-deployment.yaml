@@ -22,7 +22,7 @@ spec:
         app: ecsdemo-nodejs
     spec:
       containers:
-      - image: {{ .Values.frontend.image }}:{{ .Values.version }}
+      - image: {{ .Values.nodejs.image }}:{{ .Values.version }}
         imagePullPolicy: Always
         name: ecsdemo-nodejs
         ports:
