@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ecsdemo-crystal
 #name space change 
-  namespace: helm-chart-demo
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:

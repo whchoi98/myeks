@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: ecsdemo-crystal
 #name space change 
-  namespace: helm-chart-demo
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     app: ecsdemo-crystal
