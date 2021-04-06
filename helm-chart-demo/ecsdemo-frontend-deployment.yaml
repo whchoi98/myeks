@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecsdemo-frontend
+  labels:
+    app: ecsdemo-frontend
+#name space change 
+  namespace: helm-chart-demo
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: ecsdemo-frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: ecsdemo-frontend
+    spec:
+      containers:
+      - image: {{ .Values.frontend.image }}:{{ .Values.version }}
+        imagePullPolicy: Always
+        name: ecsdemo-frontend
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        env:
+#Container URL change.
+        - name: CRYSTAL_URL
+          value: "http://ecsdemo-crystal.clb-test.svc.cluster.local/crystal"
+        - name: NODEJS_URL
+          value: "http://ecsdemo-nodejs.clb-test.svc.cluster.local/"
+#add nodeSelector
+      nodeSelector:
+        nodegroup-type: "backend-workloads"
