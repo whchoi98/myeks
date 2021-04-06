@@ -13,8 +13,10 @@ vpc:
   subnets:
     public:
       ap-northeast-2a: { id: subnet-09c0793be6cd22b49}
+      ap-northeast-2a: { id: subnet-0b224bcfcf33ca170}
     private:
       ap-northeast-2a: { id: subnet-0281cb13f34a172bd}
+      ap-northeast-2a: { id: subnet-08e5df40469224329}
 
 secretsEncryption:
   keyARN: "arn:aws:kms:ap-northeast-2:584172017494:key/25a2f579-9f22-4d79-ad6f-1a468d06244b"
