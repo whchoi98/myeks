@@ -12,7 +12,9 @@ Metadata:
           - VpcBlock
           - AvailabilityZoneA
           - PublicSubnet01Block
+          - PublicSubnet02Block
           - PrivateSubnet01Block
+          - PrivateSubnet02Block
 
 Parameters:
 
@@ -31,12 +33,21 @@ Parameters:
     Default: 10.11.0.0/20
     Description: CidrBlock for public subnet 01 within the VPC  
   
+  PublicSubnet02Block:
+    Type: String
+    Default: 10.11.16.0/20
+    Description: CidrBlock for public subnet 02 within the VPC
+
   PrivateSubnet01Block:
     Type: String
     Default: 10.11.64.0/20
     Description: CidrBlock for private subnet 01 within the VPC
 
-
+  PrivateSubnet02Block:
+    Type: String
+    Default: 10.11.80.0/20
+    Description: CidrBlock for private subnet 02 within the VPC
+  
 Resources:
 
 #####################
@@ -71,7 +82,7 @@ Resources:
       VpcId: !Ref VPC
 
 ########################################################
-# Create-Public-Subnet: PublicSubnet01
+# Create-Public-Subnet: PublicSubnet01,02
 ########################################################
 
   PublicSubnet01:
@@ -86,6 +97,21 @@ Resources:
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-PublicSubnet01"
+      - Key: kubernetes.io/role/elb
+        Value: 1
+
+  PublicSubnet02:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Public Subnet 02
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet02Block
+      AvailabilityZone: !Ref AvailabilityZoneA
+      MapPublicIpOnLaunch: "true"
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-PublicSubnet02"
       - Key: kubernetes.io/role/elb
         Value: 1
 
@@ -104,12 +130,18 @@ Resources:
         Value: PublicRT
 
 ################################################################################################
-# Associate-Public-RouteTable: VPC_Private_Subnet_a Accsociate VPC_Private_RouteTable #
+# Associate-Public-RouteTable: VPC_Private_Subnet_a,b Accsociate VPC_Private_RouteTable #
 ################################################################################################
   PublicSubnet01RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet01
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet02RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet02
       RouteTableId: !Ref PublicRouteTable
 
 ################################################################################################
@@ -124,7 +156,7 @@ Resources:
       GatewayId: !Ref InternetGateway
 
 ################################################################################################
-# Create-NATGateway: NATGATEWAY01
+# Create-NATGateway: NATGATEWAY01,02,03,04
 ################################################################################################
   NatGateway01:
     DependsOn:
@@ -195,8 +227,23 @@ Resources:
       - Key: kubernetes.io/role/internal-elb
         Value: 1
 
+  PrivateSubnet02:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Private Subnet 02
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PrivateSubnet02Block
+      AvailabilityZone: !Ref AvailabilityZoneA
+      MapPublicIpOnLaunch: "true"
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-PrivateSubnet02"
+      - Key: kubernetes.io/role/internal-elb
+        Value: 1
+
 #####################################################################
-# Create-Private-RouteTable: PrivateRT01
+# Create-Private-RouteTable: PrivateRT01,02,03,04
 #####################################################################
   PrivateRouteTable01:
     Type: AWS::EC2::RouteTable
@@ -208,7 +255,17 @@ Resources:
       - Key: Network
         Value: PrivateRT01
 
-   
+  PrivateRouteTable02:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: Private Subnet AZ2
+      - Key: Network
+        Value: PrivateRT02
+
+    
 ################################################################################################
 # Associate-Private-RouteTable: VPC_Private_Subnet_a,b Accsociate VPC_Private_RouteTable #
 ################################################################################################
@@ -218,6 +275,13 @@ Resources:
     Properties:
       SubnetId: !Ref PrivateSubnet01
       RouteTableId: !Ref PrivateRouteTable01
+
+  PrivateSubnet02RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet02
+      RouteTableId: !Ref PrivateRouteTable02
+
 
 ################################################################################################
 # Create Prviate Routing Table
@@ -230,6 +294,16 @@ Resources:
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PrivateRouteTable01
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway01
+
+  PrivateRoute02:
+    DependsOn:
+    - VPCGatewayAttachment
+    - NatGateway01
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable02
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway01
 
@@ -246,6 +320,7 @@ Resources:
       PrivateDnsEnabled: True
       SubnetIds: 
         - Ref: PrivateSubnet01
+        - Ref: PrivateSubnet02
       SecurityGroupIds:
         - Ref: SSMSG
 
@@ -258,6 +333,7 @@ Resources:
       PrivateDnsEnabled: True
       SubnetIds: 
         - Ref: PrivateSubnet01
+        - Ref: PrivateSubnet02
       SecurityGroupIds:
         - Ref: SSMSG
 
@@ -275,9 +351,17 @@ Outputs:
     Description: PublicSubnet01 ID in the VPC
     Value: !Ref PublicSubnet01
 
+  PublicSubnet02:
+    Description: PublicSubnet02 ID in the VPC
+    Value: !Ref PublicSubnet02
+
   PrivateSubnet01:
     Description: PrivateSubnet01 ID in the VPC
     Value: !Ref PrivateSubnet01
+
+  PrivateSubnet02:
+    Description: PrivateSubnet02 ID in the VPC
+    Value: !Ref PrivateSubnet02
 
   SecurityGroups:
     Description: Security group for the cluster control plane communication with worker nodes
