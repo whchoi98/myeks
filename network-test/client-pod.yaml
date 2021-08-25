@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alpine-app-01
+  name: client-pod
   labels:
-    app: alpine-app-01
+    app: client-pod
 #name space change 
-  namespace: network-test-01
+  namespace: client-pod
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: alpine-app-01
+      app: client-pod
   template:
     metadata:
       labels:
-        app: alpine-app-01
+        app: client-pod
     spec:
       containers:
       - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
         imagePullPolicy: Always
-        name: alpine-app-01
+        name: client-pod
         ports:
         - containerPort: 80
           protocol: TCP
@@ -35,5 +35,5 @@ spec:
           periodSeconds: 20
 #add nodeSelector
       nodeSelector:
-        nodegroup-type: "frontend-workloads"
+        Node-Name: "MPUBNode01"
         

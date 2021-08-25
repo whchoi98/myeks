@@ -1,17 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: alpine-app-svc-01
-  namespace: network-test
+  name: node-test-01-svc
+  namespace: node-test-01
 spec:
   selector:
-    app: alpine-app-01
-# type: LoadBalancer
+    app: node-test-01
+  ports:
   type: NodePort
   ports:
    -  protocol: TCP
       nodePort: 30080
       port: 8080
       targetPort: 80
-
-

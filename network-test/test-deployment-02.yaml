@@ -17,12 +17,22 @@ spec:
         app: alpine-app-02
     spec:
       containers:
-      - image: praqma/network-multitool
+      - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
         imagePullPolicy: Always
         name: alpine-app-02
         ports:
         - containerPort: 80
           protocol: TCP
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
 #add nodeSelector
       nodeSelector:
-        nodegroup-type: "frontend-workloads"
+        nodegroup-type: "backend-workloads"

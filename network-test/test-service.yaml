@@ -6,9 +6,11 @@ metadata:
 spec:
   selector:
     app: alpine-app
-#  type: LoadBalancer
+# type: LoadBalancer
+  type: Nodeport
   ports:
    -  protocol: TCP
+      nodePort: 30080
       port: 8080
       targetPort: 80
 

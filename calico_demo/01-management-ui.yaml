@@ -36,3 +36,5 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 9001
+      nodeSelector:
+        Node-Type: "unmgmd-public"

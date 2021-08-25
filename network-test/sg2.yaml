@@ -1,0 +1,12 @@
+apiVersion: vpcresources.k8s.aws/v1beta1
+kind: SecurityGroupPolicy
+metadata:
+  name: pod-sg02
+  namespace: network-test
+spec:
+  podSelector:
+    matchLabels:
+      app: alpine-app-02
+  securityGroups:
+    groupIds:
+      - sg-0e7921bdeb6b4dfb8

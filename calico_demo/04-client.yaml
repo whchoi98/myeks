@@ -25,7 +25,9 @@ spec:
         - probe
         - --urls=http://frontend.stars:80/status,http://backend.stars:6379/status
         ports:
-        - containerPort: 9000 
+        - containerPort: 9000
+      nodeSelector:
+        Node-Type: "unmgmd-public"
 ---
 apiVersion: v1
 kind: Service

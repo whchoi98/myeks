@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alpine-app-01
+  name: clb-test-01
   labels:
-    app: alpine-app-01
+    app: clb-test-01
 #name space change 
-  namespace: network-test-01
+  namespace: clb-test-01
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
-      app: alpine-app-01
+      app: clb-test-01
   template:
     metadata:
       labels:
-        app: alpine-app-01
+        app: clb-test-01
     spec:
       containers:
       - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
         imagePullPolicy: Always
-        name: alpine-app-01
+        name: clb-test-01
         ports:
         - containerPort: 80
           protocol: TCP

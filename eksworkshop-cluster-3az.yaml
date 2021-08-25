@@ -9,19 +9,19 @@ metadata:
   version: "1.19"
 
 vpc: 
-  id: vpc-0a86db919c75a798f
+  id: vpc-03c4f3b81a02a46aa
   subnets:
     public:
-      ap-northeast-2a: { id: subnet-0d751055a46ca25fe}
-      ap-northeast-2b: { id: subnet-02f7e45df9b9086b5}
-      ap-northeast-2c: { id: subnet-05b74da6fa6f69dd1}
+      ap-northeast-2a: { id: subnet-0dabdc92b066581ad}
+      ap-northeast-2b: { id: subnet-0ede38666dec3b35f}
+      ap-northeast-2c: { id: subnet-01b9091263c4b30fa}
     private:
-      ap-northeast-2a: { id: subnet-023a7080dda49ccf9}
-      ap-northeast-2b: { id: subnet-0fc1ab922d50b382a}
-      ap-northeast-2c: { id: subnet-0cab7fc5ccffe7f89}
+      ap-northeast-2a: { id: subnet-0262f5b422602c335}
+      ap-northeast-2b: { id: subnet-0e858cd46e3bd6cb1}
+      ap-northeast-2c: { id: subnet-0f1eedd72ed2aa9be}
 
 secretsEncryption:
-  keyARN: "arn:aws:kms:ap-northeast-2:584172017494:key/25a2f579-9f22-4d79-ad6f-1a468d06244b"
+  keyARN: arn:aws:kms:ap-northeast-2:169799146722:key/9fd539d3-164c-49ae-8053-c66b437f6a4c
 
 nodeGroups:
   - name: ng-public-01
@@ -29,7 +29,7 @@ nodeGroups:
     desiredCapacity: 3
     minSize: 3
     maxSize: 6
-    volumeSize: 100
+    volumeSize: 200
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
@@ -52,7 +52,7 @@ nodeGroups:
     privateNetworking: true
     minSize: 3
     maxSize: 9
-    volumeSize: 100
+    volumeSize: 200
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
@@ -61,6 +61,7 @@ nodeGroups:
         publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
         allow: true
     iam:
+      attachPolicyARNs:
       withAddonPolicies:
         autoScaler: true
         cloudWatch: true
@@ -74,7 +75,7 @@ managedNodeGroups:
     desiredCapacity: 3
     minSize: 3
     maxSize: 6
-    volumeSize: 100
+    volumeSize: 200
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
@@ -90,14 +91,14 @@ managedNodeGroups:
         ebs: true
         fsx: true
         efs: true
-
+        
   - name: managed-ng-private-01
     instanceType: m5.xlarge
     desiredCapacity: 3
     privateNetworking: true
     minSize: 3
     maxSize: 9
-    volumeSize: 100
+    volumeSize: 200
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
@@ -106,6 +107,7 @@ managedNodeGroups:
         publicKeyPath: "/home/ec2-user/environment/eksworkshop.pub"
         allow: true
     iam:
+      attachPolicyARNs:
       withAddonPolicies:
         autoScaler: true
         cloudWatch: true
