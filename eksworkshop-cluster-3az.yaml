@@ -37,6 +37,10 @@ secretsEncryption:
 nodeGroups:
   - name: ng-public-01
     instanceType: m5.xlarge
+    subnets:
+      - PublicSubnet01
+      - PublicSubnet02
+      - PublicSubnet03
     desiredCapacity: 3
     minSize: 3
     maxSize: 6
@@ -59,6 +63,10 @@ nodeGroups:
 
   - name: ng-private-01
     instanceType: m5.xlarge
+    subnets:
+      - PrivateSubnet01
+      - PrivateSubnet02
+      - PrivateSubnet03
     desiredCapacity: 3
     privateNetworking: true
     minSize: 3
@@ -83,6 +91,10 @@ nodeGroups:
 managedNodeGroups:
   - name: managed-ng-public-01
     instanceType: m5.xlarge
+    subnets:
+      - PublicSubnet01
+      - PublicSubnet02
+      - PublicSubnet03
     desiredCapacity: 3
     minSize: 3
     maxSize: 6
@@ -105,6 +117,10 @@ managedNodeGroups:
         
   - name: managed-ng-private-01
     instanceType: m5.xlarge
+    subnets:
+      - PrivateSubnet01
+      - PrivateSubnet02
+      - PrivateSubnet03
     desiredCapacity: 3
     privateNetworking: true
     minSize: 3
