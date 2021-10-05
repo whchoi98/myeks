@@ -19,6 +19,9 @@ Metadata:
           - PrivateSubnet01Block
           - PrivateSubnet02Block
           - PrivateSubnet03Block
+          - TGWSubnet01Block
+          - TGWSubnet02Block
+          - TGWSubnet03Block
 
 Parameters:
 
@@ -72,6 +75,20 @@ Parameters:
     Default: 10.11.96.0/20
     Description: CidrBlock for private subnet 03 within the VPC
 
+  TGWSubnet01Block:
+    Type: String
+    Default: 10.11.251.0/20
+    Description: CidrBlock for TGW subnet 01 within the VPC
+
+  TGWSubnet02Block:
+    Type: String
+    Default: 10.11.252.0/20
+    Description: CidrBlock for TGW subnet 02 within the VPC
+  
+  TGWSubnet03Block:
+    Type: String
+    Default: 10.11.253.0/20
+    Description: CidrBlock for TGW subnet 03 within the VPC
 
 Resources:
 
@@ -307,8 +324,7 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: !Ref PrivateSubnet01Block
       AvailabilityZone: !Ref AvailabilityZoneA
-      MapPublicIpOnLaunch: "true"
-      Tags:
+        Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-PrivateSubnet01"
       - Key: kubernetes.io/role/internal-elb
@@ -322,7 +338,6 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: !Ref PrivateSubnet02Block
       AvailabilityZone: !Ref AvailabilityZoneB
-      MapPublicIpOnLaunch: "true"
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-PrivateSubnet02"
@@ -337,7 +352,6 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: !Ref PrivateSubnet03Block
       AvailabilityZone: !Ref AvailabilityZoneC
-      MapPublicIpOnLaunch: "true"
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-PrivateSubnet03"
@@ -400,39 +414,6 @@ Resources:
       SubnetId: !Ref PrivateSubnet03
       RouteTableId: !Ref PrivateRouteTable03
 
-################################################################################################
-# Create Prviate Routing Table
-################################################################################################
-
-  PrivateRoute01:
-    DependsOn:
-    - VPCGatewayAttachment
-    - NatGateway01
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable01
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway01
-
-  PrivateRoute02:
-    DependsOn:
-    - VPCGatewayAttachment
-    - NatGateway02
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable02
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway02
-
-  PrivateRoute03:
-    DependsOn:
-    - VPCGatewayAttachment
-    - NatGateway03
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable03
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway03
 
 ######################################################################
 # Create-System-Manager-Endpoint: Create VPC SystemManager Endpoint #
