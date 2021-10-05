@@ -324,7 +324,7 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: !Ref PrivateSubnet01Block
       AvailabilityZone: !Ref AvailabilityZoneA
-        Tags:
+      Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-PrivateSubnet01"
       - Key: kubernetes.io/role/internal-elb
@@ -485,4 +485,14 @@ Outputs:
     Description: Security group for the cluster control plane communication with worker nodes
     Value: !Join [ ",", [ !Ref ControlPlaneSecurityGroup ] ]
 
+  TGWSubnet01:
+    Description: TGWSubnet01 ID in the VPC
+    Value: !Ref TGWSubnet01
 
+  TGWSubnet02:
+    Description: TGWSubnet02 ID in the VPC
+    Value: !Ref TGWSubnet02
+
+  TGWSubnet03:
+    Description: TGWSubnet03 ID in the VPC
+    Value: !Ref TGWSubnet03
