@@ -36,6 +36,6 @@ spec:
           periodSeconds: 20
 #add nodeSelector
       nodeSelector:
-        Node-Type: "unmgmd-public"
+        nodegroup-type: "frontend-workloads"
 
         

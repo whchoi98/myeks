@@ -7,7 +7,7 @@ metadata:
 #name space change 
   namespace: alb-test-01
 spec:
-  replicas: 6
+  replicas: 3
   selector:
     matchLabels:
       app: alb-test-01
@@ -17,7 +17,8 @@ spec:
         app: alb-test-01
     spec:
       containers:
-      - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
+#     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
+      - image: whchoi98/network-multitool
         imagePullPolicy: Always
         name: alb-test-01
         ports:
@@ -35,7 +36,7 @@ spec:
           periodSeconds: 20
 #add nodeSelector
       nodeSelector:
-        Node-Type: "unmgmd-public"
+        nodegroup-type: "backend-workloads"
 
 
         

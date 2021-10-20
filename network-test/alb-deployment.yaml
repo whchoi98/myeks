@@ -4,7 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/name: alb-demo-deployment
   name: alb-demo-deployment
-  namespace: alb-ingress-05
+  namespace: alb-test-01
 spec:
   replicas: 1
   selector:

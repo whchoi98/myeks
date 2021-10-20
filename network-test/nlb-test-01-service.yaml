@@ -12,7 +12,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
   namespace: nlb-test-01
 spec:
-  externalTrafficPolicy: Local
+#  externalTrafficPolicy: Local
   selector:
     app: nlb-test-01
   ports:
