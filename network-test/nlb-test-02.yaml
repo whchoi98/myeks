@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cluster-test-01
+  name: nlb-test-02
   labels:
-    app: cluster-test-01
+    app: nlb-test-02
 #name space change 
-  namespace: cluster-test-01
+  namespace: nlb-test-02
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: cluster-test-01
+      app: nlb-test-02
   template:
     metadata:
       labels:
-        app: cluster-test-01
+        app: nlb-test-02
     spec:
       containers:
 #     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
       - image: whchoi98/network-multitool
         imagePullPolicy: Always
-        name: cluster-test-01
+        name: nlb-test-02
         ports:
         - containerPort: 80
           protocol: TCP
@@ -34,6 +34,8 @@ spec:
             port: 80
           initialDelaySeconds: 15
           periodSeconds: 20
-  #add nodeSelector
+#add nodeSelector
       nodeSelector:
-        nodegroup-type: "frontend-workloads"      
+        nodegroup-type: "frontend-workloads"
+
+        
