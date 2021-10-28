@@ -4,6 +4,7 @@ metadata:
   name: multus-test-01
   annotations:
     k8s.v1.cni.cncf.io/networks: ipvlan-conf-1
+#    k8s.v1.cni.cncf.io/networks: ipvlan-conf-2
   labels:
     app: multus-test-01
 #name space change 
