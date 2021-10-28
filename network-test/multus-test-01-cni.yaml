@@ -20,7 +20,8 @@ spec:
         app: multus-test-01
     spec:
       containers:
-      - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
+#     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
+      - image: whchoi98/network-multitool
         imagePullPolicy: Always
         name: multus-test-01
         ports:
