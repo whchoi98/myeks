@@ -1,42 +1,42 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: multus-pod-eni01
   annotations:
     k8s.v1.cni.cncf.io/networks: ipvlan-conf-1
 #    k8s.v1.cni.cncf.io/networks: ipvlan-conf-2
-  labels:
-    app: multus-pod-eni01
+#  labels:
+#    app: multus-pod-eni01
 #name space change 
 #  namespace: multus-test-01
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: multus-pod-eni01
+#  template:
+#    metadata:
+#      labels:
+#        app: multus-pod-eni01
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: multus-pod-eni01
-  template:
-    metadata:
-      labels:
-        app: multus-pod-eni01
-    spec:
-      containers:
-#     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
-      - image: whchoi98/network-multitool
-        imagePullPolicy: Always
-        name: multus-pod-eni01
-        ports:
-        - containerPort: 80
-          protocol: TCP
-        readinessProbe:
-          tcpSocket:
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          tcpSocket:
-            port: 80
-          initialDelaySeconds: 15
-          periodSeconds: 20
+  containers:
+#  - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
+  - image: whchoi98/network-multitool
+    imagePullPolicy: Always
+    name: multus-pod-eni01
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    readinessProbe:
+      tcpSocket:
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 10
+    livenessProbe:
+      tcpSocket:
+        port: 80
+      initialDelaySeconds: 15
+      periodSeconds: 20
 #add nodeSelector
 #      nodeSelector:
 #        Node-Name: "MPUBNode01"
