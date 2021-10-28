@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: multus-test-01
+  name: multus-pod-eni02
   annotations:
 #    k8s.v1.cni.cncf.io/networks: ipvlan-conf-1
     k8s.v1.cni.cncf.io/networks: ipvlan-conf-2
   labels:
-    app: multus-test-01
+    app: multus-pod-eni02
 #name space change 
   namespace: multus-test-01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: multus-test-01
+      app: multus-pod-eni02
   template:
     metadata:
       labels:
-        app: multus-test-01
+        app: multus-pod-eni02
     spec:
       containers:
 #     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
       - image: whchoi98/network-multitool
         imagePullPolicy: Always
-        name: multus-test-01
+        name: multus-pod-eni02
         ports:
         - containerPort: 80
           protocol: TCP
