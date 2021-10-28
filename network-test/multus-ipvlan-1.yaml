@@ -2,7 +2,7 @@ apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
   name: ipvlan-conf-1
-  namespace: multus-test-01
+#  namespace: multus-test-01
 spec:
   config: '{
       "cniVersion": "0.3.0",
