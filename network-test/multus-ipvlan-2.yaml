@@ -7,7 +7,7 @@ spec:
   config: '{
       "cniVersion": "0.3.0",
       "type": "ipvlan",
-      "master": "eth1",
+      "master": "eth2",
       "mode": "l3",
       "ipam": {
         "type": "host-local",
