@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: multus-test-01
+  annotations:
+    k8s.v1.cni.cncf.io/networks: ipvlan-conf-1
   labels:
     app: multus-test-01
 #name space change 
