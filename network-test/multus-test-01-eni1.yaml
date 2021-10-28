@@ -3,12 +3,7 @@ kind: Pod
 metadata:
   name: multus-pod-eni01
   annotations:
-    k8s.v1.cni.cncf.io/networks: '
-    {
-      "name": "ipvlan-conf-1", 
-      "default-route": ["10.0.4.1"] 
-    }'
-      
+    k8s.v1.cni.cncf.io/networks: ipvlan-conf-1      
 #    k8s.v1.cni.cncf.io/networks: ipvlan-conf-2
 #  labels:
 #    app: multus-pod-eni01
