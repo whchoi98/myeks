@@ -19,9 +19,7 @@ spec:
       containers:
 #     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
       - image: whchoi98/network-multitool
-        volumeMounts:
-        - mountPath: /emptydir
-        name: emptydir-pod
+        name: emptydir-container
         ports:
         - containerPort: 80
           protocol: TCP
@@ -35,11 +33,15 @@ spec:
             port: 80
           initialDelaySeconds: 15
           periodSeconds: 20
+# Volume mounts point
+        volumeMounts:
+        - mountPath: /emptydir
+          name: emptydir-volume
 # volume
       volumes:
         - name: emptydir-volume
-        - emptyDir: {}
+          emptyDir: {}
 #add nodeSelector
-       nodeSelector:
-         nodegroup-type: "frontend-workloads"
+      nodeSelector:
+        nodegroup-type: "frontend-workloads"
         
