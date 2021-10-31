@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-pod
+  labels:
+    app: client-pod
+#name space change 
+  namespace: client-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-pod
+  template:
+    metadata:
+      labels:
+        app: client-pod
+    spec:
+      containers:
+#     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
+      - image: whchoi98/network-multitool
+        volumeMounts:
+        - mountPath: /emptydir
+        name: client-pod
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+# volume
+      volumes:
+        - name: emptydir-volume
+        - emptyDir: {}
+#add nodeSelector
+       nodeSelector:
+         nodegroup-type: "frontend-workloads"
+        
