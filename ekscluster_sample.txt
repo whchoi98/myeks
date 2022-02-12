@@ -1,0 +1,142 @@
+cat << EOF > ~/environment/myeks/eksworkshop.yaml
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: ${ekscluster_name}
+  region: ${AWS_REGION}
+  version: ${eks_version}  
+
+vpc: 
+  id: ${vpc_ID}
+  subnets:
+    public:
+      PublicSubnet01:
+        id: ${PublicSubnet01}
+      PublicSubnet02:
+        id: ${PublicSubnet02}
+      PublicSubnet03:
+        id: ${PublicSubnet03}
+    private:
+      PrivateSubnet01:
+        id: ${PrivateSubnet01}
+      PrivateSubnet02:
+        id: ${PrivateSubnet02}
+      PrivateSubnet03:
+        id: ${PrivateSubnet03}
+secretsEncryption:
+  keyARN: ${MASTER_ARN}
+
+nodeGroups:
+  - name: ng-public-01
+    instanceType: ${instance_type}
+    subnets:
+      - PublicSubnet01
+      - PublicSubnet02
+      - PublicSubnet03
+    desiredCapacity: 3
+    minSize: 3
+    maxSize: 6
+    volumeSize: 200
+    volumeType: gp3 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: ${public_selfmgmd_node}
+    ssh: 
+        publicKeyPath: ${publicKeyPath}
+        allow: true
+    iam:
+      attachPolicyARNs:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+
+  - name: ng-private-01
+    instanceType: ${instance_type}
+    subnets:
+      - PrivateSubnet01
+      - PrivateSubnet02
+      - PrivateSubnet03
+    desiredCapacity: 3
+    privateNetworking: true
+    minSize: 3
+    maxSize: 9
+    volumeSize: 200
+    volumeType: gp3 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: ${private_selfmgmd_node}
+    ssh: 
+        publicKeyPath: ${publicKeyPath}
+        allow: true
+    iam:
+      attachPolicyARNs:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+
+managedNodeGroups:
+  - name: managed-ng-public-01
+    instanceType: ${instance_type}
+    subnets:
+      - PublicSubnet01
+      - PublicSubnet02
+      - PublicSubnet03
+    desiredCapacity: 3
+    minSize: 3
+    maxSize: 6
+    volumeSize: 200
+    volumeType: gp3 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: ${public_mgmd_node}
+    ssh: 
+        publicKeyPath: ${publicKeyPath}
+        allow: true
+    iam:
+      attachPolicyARNs:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+        
+  - name: managed-ng-private-01
+    instanceType: ${instance_type}
+    subnets:
+      - PrivateSubnet01
+      - PrivateSubnet02
+      - PrivateSubnet03
+    desiredCapacity: 3
+    privateNetworking: true
+    minSize: 3
+    maxSize: 9
+    volumeSize: 200
+    volumeType: gp3 
+    amiFamily: AmazonLinux2
+    labels:
+      nodegroup-type: ${private_mgmd_node}
+    ssh: 
+        publicKeyPath: ${publicKeyPath}
+        allow: true
+    iam:
+      attachPolicyARNs:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+        
+cloudWatch:
+    clusterLogging:
+        enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+EOF
