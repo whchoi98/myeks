@@ -6,7 +6,7 @@ kind: ClusterConfig
 metadata:
   name: ${ekscluster_name}
   region: ${AWS_REGION}
-  version: ${eks_version}  
+  version: "${eks_version}"  
 
 vpc: 
   id: ${vpc_ID}
@@ -42,9 +42,9 @@ nodeGroups:
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: ${public_selfmgmd_node}
+      nodegroup-type: "${public_selfmgmd_node}"
     ssh: 
-        publicKeyPath: ${publicKeyPath}
+        publicKeyPath: "${publicKeyPath}"
         allow: true
     iam:
       attachPolicyARNs:
@@ -69,9 +69,9 @@ nodeGroups:
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: ${private_selfmgmd_node}
+      nodegroup-type: "${private_selfmgmd_node}"
     ssh: 
-        publicKeyPath: ${publicKeyPath}
+        publicKeyPath: "${publicKeyPath}"
         allow: true
     iam:
       attachPolicyARNs:
@@ -96,9 +96,9 @@ managedNodeGroups:
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: ${public_mgmd_node}
+      nodegroup-type: "${public_mgmd_node}"
     ssh: 
-        publicKeyPath: ${publicKeyPath}
+        publicKeyPath: "${publicKeyPath}"
         allow: true
     iam:
       attachPolicyARNs:
@@ -123,9 +123,9 @@ managedNodeGroups:
     volumeType: gp3 
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: ${private_mgmd_node}
+      nodegroup-type: "${private_mgmd_node}"
     ssh: 
-        publicKeyPath: ${publicKeyPath}
+        publicKeyPath: "${publicKeyPath}"
         allow: true
     iam:
       attachPolicyARNs:
