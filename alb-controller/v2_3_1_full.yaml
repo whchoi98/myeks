@@ -476,6 +476,7 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
+#
 #---
 #apiVersion: v1
 #kind: ServiceAccount
@@ -485,6 +486,7 @@ status:
 #    app.kubernetes.io/name: aws-load-balancer-controller
 #  name: aws-load-balancer-controller
 #  namespace: kube-system
+#
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
