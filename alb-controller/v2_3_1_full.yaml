@@ -736,7 +736,7 @@ spec:
     spec:
       containers:
       - args:
-        - --cluster-name=your-cluster-name
+        - --cluster-name=eksworkshop
         - --ingress-class=alb
         image: amazon/aws-alb-ingress-controller:v2.3.1
         livenessProbe:
