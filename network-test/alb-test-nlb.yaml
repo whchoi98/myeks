@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alb-test-03
+  name: alb-test-nlb
   labels:
-    app: alb-test-03
+    app: alb-test-nlb
 #name space change 
-  namespace: alb-test-03
+  namespace: alb-test-nlb
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: alb-test-03
+      app: alb-test-nlb
   template:
     metadata:
       labels:
-        app: alb-test-03
+        app: alb-test-nlb
     spec:
       containers:
 #     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
       - image: whchoi98/network-multitool
         imagePullPolicy: Always
-        name: alb-test-03
+        name: alb-test-nlb
         ports:
         - containerPort: 80
           protocol: TCP

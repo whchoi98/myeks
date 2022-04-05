@@ -8,24 +8,24 @@ metadata:
   version: "1.20"  
 
 vpc: 
-  id: vpc-0cac82bae42538fd7
+  id: vpc-0c6eeb6d44deb6d8d
   subnets:
     public:
       PublicSubnet01:
-        id: subnet-0cd13d352f0960e86
+        id: subnet-0b8a6526abb995df2
       PublicSubnet02:
-        id: subnet-065f091e585fea002
+        id: subnet-00707d3b9837c9919
       PublicSubnet03:
-        id: subnet-0d767589be30c617f
+        id: subnet-066a3ca23164c1925
     private:
       PrivateSubnet01:
-        id: subnet-056e4159357931f83
+        id: subnet-07bd0d76e375c5256
       PrivateSubnet02:
-        id: subnet-02bb9d3ae75d5c333
+        id: subnet-0e303b6f81a3a4a46
       PrivateSubnet03:
-        id: subnet-006b575333b696f4b
+        id: subnet-0b4eb634991692a96
 secretsEncryption:
-  keyARN: arn:aws:kms:ap-northeast-2:794454221194:key/e9d049ae-38f1-4f38-b084-02ce197b0894
+  keyARN: arn:aws:kms:ap-northeast-2:169799146722:key/9fd539d3-164c-49ae-8053-c66b437f6a4c
 
 nodeGroups:
   - name: ng-public-01
