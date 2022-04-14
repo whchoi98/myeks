@@ -5,7 +5,8 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     service.beta.kubernetes.io/aws-load-balancer-type: "external"
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+    service.beta.kubernetes.io/aws-load-balancer-name: "alb-ing-03"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
   namespace: alb-ing-03
 spec:
   selector:
