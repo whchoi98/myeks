@@ -220,7 +220,7 @@ Resources:
       GatewayId: !Ref InternetGateway
 
 ################################################################################################
-# Create-NATGateway: NATGATEWAY01,02,03,04
+# Create-NATGateway: NATGATEWAY01,02,03
 ################################################################################################
   NatGateway01:
     DependsOn:
@@ -313,7 +313,7 @@ Resources:
         - Key: Name
           Value: !Sub '${AWS::StackName}-SSMSG'
 ########################################################
-# Create-Private-Subnet: PrivateSubnet01,02,03,04
+# Create-Private-Subnet: PrivateSubnet01,02
 ########################################################
 
   PrivateSubnet01:
@@ -359,7 +359,7 @@ Resources:
         Value: 1
 
 #####################################################################
-# Create-Private-RouteTable: PrivateRT01,02,03,04
+# Create-Private-RouteTable: PrivateRT01,02
 #####################################################################
   PrivateRouteTable01:
     Type: AWS::EC2::RouteTable

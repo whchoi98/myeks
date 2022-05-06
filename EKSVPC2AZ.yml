@@ -16,7 +16,9 @@ Metadata:
           - PublicSubnet02Block
           - PrivateSubnet01Block
           - PrivateSubnet02Block
-
+          - TGWSubnet01Block
+          - TGWSubnet02Block
+          - TGWSubnet03Block
 Parameters:
 
   VpcBlock:
@@ -53,7 +55,17 @@ Parameters:
     Type: String
     Default: 10.11.80.0/20
     Description: CidrBlock for private subnet 02 within the VPC
-  
+
+  TGWSubnet01Block:
+    Type: String
+    Default: 10.11.251.0/24
+    Description: CidrBlock for TGW subnet 01 within the VPC
+
+  TGWSubnet02Block:
+    Type: String
+    Default: 10.11.252.0/24
+    Description: CidrBlock for TGW subnet 02 within the VPC
+
 Resources:
 
 #####################
@@ -162,7 +174,7 @@ Resources:
       GatewayId: !Ref InternetGateway
 
 ################################################################################################
-# Create-NATGateway: NATGATEWAY01,02,03,04
+# Create-NATGateway: NATGATEWAY01,02
 ################################################################################################
   NatGateway01:
     DependsOn:
@@ -269,7 +281,7 @@ Resources:
         Value: 1
 
 #####################################################################
-# Create-Private-RouteTable: PrivateRT01,02,03,04
+# Create-Private-RouteTable: PrivateRT01,02
 #####################################################################
   PrivateRouteTable01:
     Type: AWS::EC2::RouteTable
@@ -333,6 +345,77 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway02
 
+########################################################
+# Create-TGW-Subnet: TGWSubnet01,02
+########################################################
+
+  TGWSubnet01:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: TGW Subnet 01
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref TGWSubnet01Block
+      AvailabilityZone: !Ref AvailabilityZoneA
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-TGWSubnet01"
+      - Key: kubernetes.io/role/internal-elb
+        Value: 1
+
+  TGWSubnet02:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: TGW Subnet 02
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref TGWSubnet02Block
+      AvailabilityZone: !Ref AvailabilityZoneB
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-TGWSubnet02"
+      - Key: kubernetes.io/role/internal-elb
+        Value: 1
+
+#####################################################################
+# Create-TGW-RouteTable: TGWRT01,02
+#####################################################################
+  TGWRouteTable01:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: TGW Subnet AZ1
+      - Key: Network
+        Value: TGWRT01
+
+  TGWRouteTable02:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+      - Key: Name
+        Value: TGW Subnet AZ2
+      - Key: Network
+        Value: TGWRT02
+     
+################################################################################################
+# Associate-TGW-RouteTable: VPC_TGW_Subnet_a,b Accsociate VPC_TGW_RouteTable #
+################################################################################################
+
+  TGWSubnet01RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref TGWSubnet01
+      RouteTableId: !Ref TGWRouteTable01
+
+  TGWSubnet02RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref TGWSubnet02
+      RouteTableId: !Ref TGWRouteTable02
+
 ######################################################################
 # Create-System-Manager-Endpoint: Create VPC SystemManager Endpoint #
 ######################################################################
@@ -393,4 +476,11 @@ Outputs:
     Description: Security group for the cluster control plane communication with worker nodes
     Value: !Join [ ",", [ !Ref ControlPlaneSecurityGroup ] ]
 
+  TGWSubnet01:
+    Description: TGWSubnet01 ID in the VPC
+    Value: !Ref TGWSubnet01
+
+  TGWSubnet02:
+    Description: TGWSubnet02 ID in the VPC
+    Value: !Ref TGWSubnet02
 
