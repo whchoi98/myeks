@@ -448,7 +448,7 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway03
 ########################################################
-# Create-TGW-Subnet: TGWSubnet01,02,03,04
+# Create-TGW-Subnet: TGWSubnet01,02,03
 ########################################################
 
   TGWSubnet01:
