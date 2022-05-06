@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Amazon EKS Sample VPC - 4 AZ, Private 4 subnets, Public 4 subnets, 1 IGW, 4 NATGateways, Public RT, 4 Private RT, Security Group for ControlPlane '
+Description: 'Amazon EKS Sample VPC - 2 AZ, Private 2 subnets, Public 2 subnets, 1 IGW, 2 NATGateways, Public RT, 2 Private RT, Security Group for ControlPlane '
 
 Metadata:
   AWS::CloudFormation::Interface:
