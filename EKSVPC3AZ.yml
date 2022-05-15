@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Amazon EKS Sample VPC - 3 AZ, Private 3 subnets, Public 3 subnets, 1 IGW, 3 NATGateways, Public RT, 3 Private RT, Security Group for ControlPlane '
+Description: 'Amazon EKS Sample VPC - 3 AZ, Private 3 subnets, Public 6 subnets, 1 IGW, 3 NATGateways, Public RT, 3 Private RT, Security Group for ControlPlane '
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -16,6 +16,9 @@ Metadata:
           - PublicSubnet01Block
           - PublicSubnet02Block
           - PublicSubnet03Block
+          - PublicSubnet04Block
+          - PublicSubnet05Block
+          - PublicSubnet06Block
           - PrivateSubnet01Block
           - PrivateSubnet02Block
           - PrivateSubnet03Block
@@ -60,19 +63,34 @@ Parameters:
     Default: 10.11.32.0/20
     Description: CidrBlock for public subnet 03 within the VPC
 
-  PrivateSubnet01Block:
+  PublicSubnet04Block:
+    Type: String
+    Default: 10.11.48.0/20
+    Description: CidrBlock for public subnet 04 within the VPC  
+  
+  PublicSubnet05Block:
     Type: String
     Default: 10.11.64.0/20
+    Description: CidrBlock for public subnet 05 within the VPC
+
+  PublicSubnet06Block:
+    Type: String
+    Default: 10.11.80.0/20
+    Description: CidrBlock for public subnet 06 within the VPC
+
+  PrivateSubnet01Block:
+    Type: String
+    Default: 10.11.96.0/20
     Description: CidrBlock for private subnet 01 within the VPC
 
   PrivateSubnet02Block:
     Type: String
-    Default: 10.11.80.0/20
+    Default: 10.11.112.0/20
     Description: CidrBlock for private subnet 02 within the VPC
   
   PrivateSubnet03Block:
     Type: String
-    Default: 10.11.96.0/20
+    Default: 10.11.128.0/20
     Description: CidrBlock for private subnet 03 within the VPC
 
   TGWSubnet01Block:
@@ -172,7 +190,50 @@ Resources:
       - Key: kubernetes.io/role/elb
         Value: 1
 
+  PublicSubnet04:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Public Subnet 04
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet04Block
+      AvailabilityZone: !Ref AvailabilityZoneA
+      MapPublicIpOnLaunch: "true"
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-PublicSubnet04"
+      - Key: kubernetes.io/role/elb
+        Value: 1
 
+  PublicSubnet05:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Public Subnet 05
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet05Block
+      AvailabilityZone: !Ref AvailabilityZoneB
+      MapPublicIpOnLaunch: "true"
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-PublicSubnet05"
+      - Key: kubernetes.io/role/elb
+        Value: 1
+
+  PublicSubnet06:
+    Type: AWS::EC2::Subnet
+    Metadata:
+      Comment: Public Subnet 06
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet06Block
+      AvailabilityZone: !Ref AvailabilityZoneC
+      MapPublicIpOnLaunch: "true"
+      Tags:
+      - Key: Name
+        Value: !Sub "${AWS::StackName}-PublicSubnet03"
+      - Key: kubernetes.io/role/elb
+        Value: 1
 #####################################################################
 # Create-Public-RouteTable:
 #####################################################################
@@ -208,6 +269,23 @@ Resources:
       SubnetId: !Ref PublicSubnet03
       RouteTableId: !Ref PublicRouteTable
 
+  PublicSubnet04RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet04
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet05RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet05
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet06RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet06
+      RouteTableId: !Ref PublicRouteTable
 ################################################################################################
 # Create Public Routing Table
 ################################################################################################
@@ -602,6 +680,18 @@ Outputs:
   PublicSubnet03:
     Description: PublicSubnet03 ID in the VPC
     Value: !Ref PublicSubnet03
+
+  PublicSubnet04:
+    Description: PublicSubnet04 ID in the VPC
+    Value: !Ref PublicSubnet04
+
+  PublicSubnet05:
+    Description: PublicSubnet05 ID in the VPC
+    Value: !Ref PublicSubnet05
+
+  PublicSubnet06:
+    Description: PublicSubnet06 ID in the VPC
+    Value: !Ref PublicSubnet06
 
   PrivateSubnet01:
     Description: PrivateSubnet01 ID in the VPC
