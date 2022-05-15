@@ -231,7 +231,7 @@ Resources:
       MapPublicIpOnLaunch: "true"
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-PublicSubnet03"
+        Value: !Sub "${AWS::StackName}-PublicSubnet06"
       - Key: kubernetes.io/role/elb
         Value: 1
 #####################################################################
