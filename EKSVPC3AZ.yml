@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Amazon EKS Sample VPC - 3 AZ, Private 3 subnets, Public 6 subnets, 1 IGW, 3 NATGateways, Public RT, 3 Private RT, Security Group for ControlPlane '
+Description: 'Amazon EKS Sample VPC - 3 AZ, Private 3 subnets, Public 3 subnets, 1 IGW, 3 NATGateways, Public RT, 3 Private RT, Security Group for ControlPlane '
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -80,17 +80,17 @@ Parameters:
 
   PrivateSubnet01Block:
     Type: String
-    Default: 10.11.96.0/20
+    Default: 10.11.48.0/20
     Description: CidrBlock for private subnet 01 within the VPC
 
   PrivateSubnet02Block:
     Type: String
-    Default: 10.11.112.0/20
+    Default: 10.11.64.0/20
     Description: CidrBlock for private subnet 02 within the VPC
   
   PrivateSubnet03Block:
     Type: String
-    Default: 10.11.128.0/20
+    Default: 10.11.80.0/20
     Description: CidrBlock for private subnet 03 within the VPC
 
   TGWSubnet01Block:
