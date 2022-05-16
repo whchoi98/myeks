@@ -269,23 +269,23 @@ Resources:
       SubnetId: !Ref PublicSubnet03
       RouteTableId: !Ref PublicRouteTable
 
-  PublicSubnet04RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref PublicSubnet04
-      RouteTableId: !Ref PublicRouteTable
-
-  PublicSubnet05RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref PublicSubnet05
-      RouteTableId: !Ref PublicRouteTable
-
-  PublicSubnet06RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref PublicSubnet06
-      RouteTableId: !Ref PublicRouteTable
+#  PublicSubnet04RouteTableAssociation:
+#    Type: AWS::EC2::SubnetRouteTableAssociation
+#    Properties:
+#      SubnetId: !Ref PublicSubnet04
+#      RouteTableId: !Ref PublicRouteTabl#e
+#
+#  PublicSubnet05RouteTableAssociation:
+#    Type: AWS::EC2::SubnetRouteTableAssociation
+#    Properties:
+#      SubnetId: !Ref PublicSubnet05
+#      RouteTableId: !Ref PublicRouteTabl#e
+#
+#  PublicSubnet06RouteTableAssociation:
+#    Type: AWS::EC2::SubnetRouteTableAssociation
+#    Properties:
+#      SubnetId: !Ref PublicSubnet06
+#      RouteTableId: !Ref PublicRouteTable
 ################################################################################################
 # Create Public Routing Table
 ################################################################################################
