@@ -2,6 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: istio-test01-gw
+  namespace: istio-test01
 spec:
   selector:
     istio: ingressgateway

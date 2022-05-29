@@ -1,7 +1,8 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: nginx-service
+  name: istio-test01-vs
+  namespace: istio-test01
 spec:
   hosts:
   - "*"
