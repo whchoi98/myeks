@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: clb-test-01-svc
-  namespace: clb-test-01
+  name: istio-test01-svc
+  namespace: istio-test01
 spec:
   selector:
-    app: clb-test-01
+    app: istio-test01-app
   ports:
   type: LoadBalancer
   ports:
    -  protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 80
