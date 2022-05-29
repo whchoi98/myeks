@@ -36,5 +36,5 @@ spec:
           periodSeconds: 20
 #add nodeSelector
       nodeSelector:
-        Node-Name: "MPUBNode01"
+        nodegroup-type: "frontend-workloads"
         
