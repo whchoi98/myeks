@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: istio-test-pod
+  name: istio-test01-app
   labels:
-    app: istio-test-pod
+    app: istio-test01-app
 #name space change 
   namespace: istio-test01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: istio-test-pod
+      app: istio-test01-app
   template:
     metadata:
       labels:
-        app: istio-test-pod
+        app: istio-test01-app
 #       sidecar.istio.io/inject: "false"	
     spec:
       containers:
 #      - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
       - image: whchoi98/network-multitool
         imagePullPolicy: Always
-        name: istio-test-pod
+        name: istio-test01-app
         ports:
         - containerPort: 80
           protocol: TCP
