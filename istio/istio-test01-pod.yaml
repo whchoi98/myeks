@@ -15,7 +15,7 @@ spec:
     metadata:
       labels:
         app: istio-test-pod
-#       sidecar.istio.io/inject	
+#       sidecar.istio.io/inject: "false"	
     spec:
       containers:
 #      - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
