@@ -273,13 +273,13 @@ Resources:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet04
-      RouteTableId: !Ref PublicRouteTabl#e
+      RouteTableId: !Ref PublicRouteTable
 
   PublicSubnet05RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet05
-      RouteTableId: !Ref PublicRouteTabl#e
+      RouteTableId: !Ref PublicRouteTable
 
   PublicSubnet06RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
@@ -692,7 +692,7 @@ Outputs:
   PublicSubnet06:
     Description: PublicSubnet06 ID in the VPC
     Value: !Ref PublicSubnet06
-    
+
   PrivateSubnet01:
     Description: PrivateSubnet01 ID in the VPC
     Value: !Ref PrivateSubnet01
