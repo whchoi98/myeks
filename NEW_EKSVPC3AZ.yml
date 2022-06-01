@@ -80,17 +80,17 @@ Parameters:
 
   PrivateSubnet01Block:
     Type: String
-    Default: 10.11.48.0/20
+    Default: 10.11.96.0/20
     Description: CidrBlock for private subnet 01 within the VPC
 
   PrivateSubnet02Block:
     Type: String
-    Default: 10.11.64.0/20
+    Default: 10.11.112.0/20
     Description: CidrBlock for private subnet 02 within the VPC
   
   PrivateSubnet03Block:
     Type: String
-    Default: 10.11.80.0/20
+    Default: 10.11.128.0/20
     Description: CidrBlock for private subnet 03 within the VPC
 
   TGWSubnet01Block:
