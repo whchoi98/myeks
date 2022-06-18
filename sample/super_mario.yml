@@ -19,7 +19,7 @@ spec:
       - name: mario
         image: pengbai/docker-supermario
       nodeSelector:
-        nodegroup-type: "managed-backend-workloads"
+        nodegroup-type: "managed-frontend-workloads"
 ---
 apiVersion: v1
 kind: Service
@@ -34,11 +34,8 @@ spec:
   externalTrafficPolicy: Local
   selector:
     app: supermario
-  ports:
   type: LoadBalancer
   ports:
    -  protocol: TCP
       port: 80
       targetPort: 8080
-EOF
-
