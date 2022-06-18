@@ -36,6 +36,6 @@ spec:
           periodSeconds: 20
 #add nodeSelector
       nodeSelector:
-        nodegroup-type: "frontend-workloads"
+        nodegroup-type: "managed-frontend-workloads"
 
         
