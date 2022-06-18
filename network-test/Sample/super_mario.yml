@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: super_mario
+  name: supermario
   labels:
-    app: super_mario
+    app: supermario
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: super_mario
+      app: supermario
   template:
     metadata:
       labels:
-        app: super_mario
+        app: supermario
     spec:
       containers:
       - name: mario
@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: super_mario
+  name: supermario
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 #    service.beta.kubernetes.io/aws-load-balancer-type: external
@@ -32,11 +32,11 @@ metadata:
 #    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-  namespace: super_mario
+  namespace: supermario
 spec:
   externalTrafficPolicy: Local
   selector:
-    app: super_mario
+    app: supermario
   ports:
   type: LoadBalancer
   ports:
