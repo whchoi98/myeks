@@ -4,6 +4,7 @@ metadata:
   name: mario
   labels:
     app: mario
+  namespace: mario
 spec:
   replicas: 1
   selector:
@@ -23,13 +24,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-   name: mario
+  name: mario
+  namespace: mario
 spec:
   selector:
     app: mario
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  type: NodePort
-  externalTrafficPolicy: Local
+  type: LoadBalancer
+  ports:
+   -  protocol: TCP
+      port: 80
+      targetPort: 8080
