@@ -4,6 +4,7 @@ metadata:
   name: tetris
   labels:
     app: tetris
+  namespace: tetris
 spec:
   replicas: 1
   selector:
@@ -17,16 +18,24 @@ spec:
       containers:
       - name: tetris
         image: bsord/tetris
+      nodeSelector:
+        nodegroup-type: "managed-frontend-workloads"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-   name: tetris
+  name: tetris
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+  namespace: tetris
 spec:
+  externalTrafficPolicy: Local
   selector:
     app: tetris
+  type: LoadBalancer
   ports:
   - port: 80
     protocol: TCP
     targetPort: 80
-  type: NodePort
