@@ -6,7 +6,6 @@ metadata:
 spec:
   selector:
     app: node-test-01
-  ports:
   type: NodePort
   ports:
    -  protocol: TCP

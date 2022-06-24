@@ -6,7 +6,6 @@ metadata:
 spec:
   selector:
     app: alb-test-nlb
-  ports:
   type: NodePort
   ports:
    -  protocol: TCP

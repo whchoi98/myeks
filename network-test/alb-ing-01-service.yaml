@@ -6,7 +6,6 @@ metadata:
 spec:
   selector:
     app: alb-ing-01
-  ports:
   type: NodePort
   ports:
    -  protocol: TCP

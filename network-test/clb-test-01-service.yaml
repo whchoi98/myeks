@@ -6,7 +6,6 @@ metadata:
 spec:
   selector:
     app: clb-test-01
-  ports:
   type: LoadBalancer
   ports:
    -  protocol: TCP

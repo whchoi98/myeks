@@ -15,7 +15,6 @@ spec:
   externalTrafficPolicy: Local
   selector:
     app: nlb-test-02
-  ports:
   type: LoadBalancer
   ports:
    -  protocol: TCP
