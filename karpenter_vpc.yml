@@ -11,8 +11,8 @@ Metadata:
         Parameters:
           - VpcBlock
           - AvailabilityZoneA
-          - AvailabilityZoneB
           - AvailabilityZoneC
+          - AvailabilityZoneD
           - PublicSubnet01Block
           - PublicSubnet02Block
           - PublicSubnet03Block
@@ -38,15 +38,15 @@ Parameters:
     Type: AWS::EC2::AvailabilityZone::Name
     Default: "ap-northeast-1a"
 
-  AvailabilityZoneB:
+  AvailabilityZoneC:
     Description: "Choose AZ2 for your VPC."
     Type: AWS::EC2::AvailabilityZone::Name
-    Default: "ap-northeast-1b"
+    Default: "ap-northeast-1c"
 
-  AvailabilityZoneC:
+  AvailabilityZoneD:
     Description: "Choose AZ1 for your VPC."
     Type: AWS::EC2::AvailabilityZone::Name
-    Default: "ap-northeast-1c"
+    Default: "ap-northeast-1d"
 
   PublicSubnet01Block:
     Type: String
@@ -167,7 +167,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: !Ref PublicSubnet02Block
-      AvailabilityZone: !Ref AvailabilityZoneB
+      AvailabilityZone: !Ref AvailabilityZoneC
       MapPublicIpOnLaunch: "true"
       Tags:
       - Key: Name
@@ -182,7 +182,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: !Ref PublicSubnet03Block
-      AvailabilityZone: !Ref AvailabilityZoneC
+      AvailabilityZone: !Ref AvailabilityZoneD
       MapPublicIpOnLaunch: "true"
       Tags:
       - Key: Name
@@ -415,7 +415,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: !Ref PrivateSubnet02Block
-      AvailabilityZone: !Ref AvailabilityZoneB
+      AvailabilityZone: !Ref AvailabilityZoneC
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-PrivateSubnet02"
@@ -429,7 +429,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: !Ref PrivateSubnet03Block
-      AvailabilityZone: !Ref AvailabilityZoneC
+      AvailabilityZone: !Ref AvailabilityZoneD
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-PrivateSubnet03"
@@ -550,7 +550,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: !Ref TGWSubnet02Block
-      AvailabilityZone: !Ref AvailabilityZoneB
+      AvailabilityZone: !Ref AvailabilityZoneC
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-TGWSubnet02"
@@ -564,7 +564,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: !Ref TGWSubnet03Block
-      AvailabilityZone: !Ref AvailabilityZoneC
+      AvailabilityZone: !Ref AvailabilityZoneD
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-TGWSubnet03"
