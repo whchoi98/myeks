@@ -11,7 +11,7 @@ metadata:
   labels:
     app: "fargate-02"
     env: "fargate-02"
-  namespace: "fargate"
+  namespace: "fargate-02"
 spec:
   replicas: 6
   selector:
