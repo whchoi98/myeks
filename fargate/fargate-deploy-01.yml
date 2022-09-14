@@ -49,7 +49,7 @@ metadata:
   namespace: "fargate-01"
 spec:
   selector:
-    app: fargate-01
+    app: "fargate-01"
   type: NodePort
   ports:
    -  protocol: TCP

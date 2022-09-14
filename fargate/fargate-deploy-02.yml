@@ -51,10 +51,10 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: "external"
     service.beta.kubernetes.io/aws-load-balancer-name: "alb-ingress-fg-02"
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
-  namespace: fargate-02
+  namespace: "fargate-02"
 spec:
   selector:
-    app: fargate-02
+    app: "fargate-02"
   type: LoadBalancer
   ports:
    -  protocol: TCP
