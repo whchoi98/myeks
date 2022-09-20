@@ -6,7 +6,7 @@ metadata:
     app: mario
   namespace: mario
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: mario
