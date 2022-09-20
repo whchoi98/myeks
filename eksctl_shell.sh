@@ -1,6 +1,8 @@
 #!/bin/bash
 # command ./eksctl_shell.sh
-# eksctl yaml 실행 
+# eksctl yaml 실행
+
+source ~/.bash_profile
 cat << EOF > ~/environment/myeks/eksworkshop.yaml
 ---
 apiVersion: eksctl.io/v1alpha5
