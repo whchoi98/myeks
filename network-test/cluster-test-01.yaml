@@ -1,10 +1,15 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cluster-test-01
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cluster-test-01
   labels:
     app: cluster-test-01
-#name space change 
   namespace: cluster-test-01
 spec:
   replicas: 3
@@ -33,6 +38,5 @@ spec:
             port: 80
           initialDelaySeconds: 15
           periodSeconds: 20
-  #add nodeSelector
       nodeSelector:
         nodegroup-type: "managed-frontend-workloads"      
