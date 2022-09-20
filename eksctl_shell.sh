@@ -9,7 +9,7 @@ kind: ClusterConfig
 metadata:
   name: ${ekscluster_name}
   region: ${AWS_REGION}
-  version: "${eks_version}"  
+  version: ${eks_version}  
 vpc: 
   id: ${vpc_ID}
   subnets:
