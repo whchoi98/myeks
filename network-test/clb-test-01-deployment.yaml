@@ -26,7 +26,7 @@ spec:
 #     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
       - image: "whchoi98/network-multitool"
         imagePullPolicy: Always
-        name: clb-test-01
+        name: "clb-test-01"
         ports:
         - containerPort: 80
           protocol: TCP
@@ -41,8 +41,8 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 20
 #add nodeSelector
-     nodeSelector:
-        nodegroup-type: "managed-frontend-workloads"
+      nodeSelector:
+         nodegroup-type: "managed-frontend-workloads"
 ---
 apiVersion: v1
 kind: Service
