@@ -30,7 +30,7 @@ Parameters:
 
   VpcBlock:
     Type: String
-    Default: 10.11.0.0/16
+    Default: 10.21.0.0/16
     Description: The CIDR range for the VPC. This should be a valid private (RFC 1918) CIDR range.
 
   AvailabilityZoneA:
@@ -50,62 +50,62 @@ Parameters:
 
   PublicSubnet01Block:
     Type: String
-    Default: 10.11.0.0/20
+    Default: 10.21.0.0/20
     Description: CidrBlock for public subnet 01 within the VPC  
   
   PublicSubnet02Block:
     Type: String
-    Default: 10.11.16.0/20
+    Default: 10.21.16.0/20
     Description: CidrBlock for public subnet 02 within the VPC
 
   PublicSubnet03Block:
     Type: String
-    Default: 10.11.32.0/20
+    Default: 10.21.32.0/20
     Description: CidrBlock for public subnet 03 within the VPC
 
 #  PublicSubnet04Block:
 #    Type: String
-#    Default: 10.11.48.0/20
+#    Default: 10.21.48.0/20
 #    Description: CidrBlock for public subnet 04 within the VPC  
 #  
 #  PublicSubnet05Block:
 #    Type: String
-#    Default: 10.11.64.0/20
+#    Default: 10.21.64.0/20
 #    Description: CidrBlock for public subnet 05 within the VPC
 #
 #  PublicSubnet06Block:
 #    Type: String
-#    Default: 10.11.80.0/20
+#    Default: 10.21.80.0/20
 #    Description: CidrBlock for public subnet 06 within the VPC
 
   PrivateSubnet01Block:
     Type: String
-    Default: 10.11.48.0/20
+    Default: 10.21.48.0/20
     Description: CidrBlock for private subnet 01 within the VPC
 
   PrivateSubnet02Block:
     Type: String
-    Default: 10.11.64.0/20
+    Default: 10.21.64.0/20
     Description: CidrBlock for private subnet 02 within the VPC
   
   PrivateSubnet03Block:
     Type: String
-    Default: 10.11.80.0/20
+    Default: 10.21.80.0/20
     Description: CidrBlock for private subnet 03 within the VPC
 
   TGWSubnet01Block:
     Type: String
-    Default: 10.11.251.0/24
+    Default: 10.21.251.0/24
     Description: CidrBlock for TGW subnet 01 within the VPC
 
   TGWSubnet02Block:
     Type: String
-    Default: 10.11.252.0/24
+    Default: 10.21.252.0/24
     Description: CidrBlock for TGW subnet 02 within the VPC
   
   TGWSubnet03Block:
     Type: String
-    Default: 10.11.253.0/24
+    Default: 10.21.253.0/24
     Description: CidrBlock for TGW subnet 03 within the VPC
 
 Resources:
