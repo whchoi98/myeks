@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: alb-demo-deployment
+  name: alb-demo-deployment
+  namespace: alb-test-01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alb-demo-app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: alb-demo-app
+    spec:
+      containers:
+      - name: app
+        image: registry.gitlab.com/nubisoft-public/alb-demo
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: http
+      nodeSelector:
+        Node-Type: "mgmd-public"

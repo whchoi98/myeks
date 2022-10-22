@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alb-test-01-green
+  namespace: alb-test-01
+spec:
+  selector:
+    app: alb-test-01-green
+  type: NodePort
+  ports:
+   -  protocol: TCP
+      port: 8080
+      targetPort: 80
