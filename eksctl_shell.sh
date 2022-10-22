@@ -49,7 +49,8 @@ nodeGroups:
     minSize: 3
     maxSize: 6
     volumeSize: 200
-    volumeType: gp3 
+    volumeType: gp3
+    volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
       nodegroup-type: "${public_selfmgmd_node}"
@@ -75,7 +76,8 @@ nodeGroups:
     minSize: 3
     maxSize: 9
     volumeSize: 200
-    volumeType: gp3 
+    volumeType: gp3
+    volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
       nodegroup-type: "${private_selfmgmd_node}"
@@ -101,7 +103,8 @@ managedNodeGroups:
     minSize: 3
     maxSize: 6
     volumeSize: 200
-    volumeType: gp3 
+    volumeType: gp3
+    volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
       nodegroup-type: "${public_mgmd_node}"
@@ -127,7 +130,8 @@ managedNodeGroups:
     minSize: 3
     maxSize: 9
     volumeSize: 200
-    volumeType: gp3 
+    volumeType: gp3
+    volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
       nodegroup-type: "${private_mgmd_node}"
