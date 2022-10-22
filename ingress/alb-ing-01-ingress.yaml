@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: "alb-ing-01"
@@ -12,7 +12,9 @@ spec:
   rules:
     - http:
         paths:
-          - path: /*
+          - pathType: ImplementationSpecific
             backend:
-              serviceName: "alb-ing-01"
-              servicePort: 8080
+              service:
+                name: "alb-ing-01"
+                port:
+                  number: 8080
