@@ -9,6 +9,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
   namespace: alb-ing-03
 spec:
+  externalTrafficPolicy: Local
   selector:
     app: alb-ing-03
   type: LoadBalancer
