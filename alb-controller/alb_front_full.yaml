@@ -56,7 +56,7 @@ spec:
       port: 80
       targetPort: 3000
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ecsdemo-frontend
@@ -69,7 +69,9 @@ spec:
   rules:
     - http:
         paths:
-          - path: /*
+          - pathType: ImplementationSpecific
             backend:
-              serviceName: "ecsdemo-frontend"
-              servicePort: 80
+              service:
+                name: "ecsdemo-frontend"
+                port:
+                  number: 80
