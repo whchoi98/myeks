@@ -3,15 +3,15 @@
 # eksctl yaml 실행
 
 source ~/.bash_profile
-cat << EOF > ~/environment/myeks/eksworkshop.yaml
+cat << EOF > ~/environment/myeks/karpenter_cluster.yaml
 ---
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: ${ekscluster_name}
-  region: ${AWS_REGION}
-  version: "${eks_version}"  
+  name: ${KARPENTER_CLUSTER_NAME}
+  region: ${KARPENTER_REGION}
+  version: "${KARPENTER_EKS_VERSION}"  
 vpc: 
   id: ${vpc_ID}
   subnets:
