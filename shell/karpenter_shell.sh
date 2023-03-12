@@ -1,5 +1,5 @@
 #export ACCOUNT_ID=$(aws sts get-caller-identity --region ap-northeast-2 --output text --query Account)
-#export eks_version="1.22"
+export eks_version="1.22"
 #export publicKeyPath="/home/ec2-user/environment/eksworkshop.pub"
 export k_ekscluster_name=k-eksworkshop
 export k_public_mgmd_node="frontend"
