@@ -7,7 +7,7 @@ export k_public_mgmd_node="frontend"
 export k_private_mgmd_node="backend"
 export KARPENTER_VERSION="v0.27.0"
 export publicKeyPath="/home/ec2-user/environment/eksworkshop.pub"
-export instance_type="m5.xlarge"
+export instance_type="m5.2xlarge"
 echo ${k_ekscluster_name}
 echo ${KARPENTER_ACCOUNT_ID}
 echo ${k_public_mgmd_node}
