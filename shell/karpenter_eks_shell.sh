@@ -1,34 +1,33 @@
 #!/bin/bash
-# command ./eks_shell.sh
+# command ./karpenter_eks_shell.sh
 
 cd ~/environment/
 #VPC ID export
-export vpc_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=eksworkshop | jq -r '.Vpcs[].VpcId')
-echo $vpc_ID
+export k_vpc_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=eksworkshop --region ap-northeast-1 | jq -r '.Vpcs[].VpcId')
+echo $k_vpc_ID
 
 #Subnet ID, CIDR, Subnet Name export
-aws ec2 describe-subnets --filter Name=vpc-id,Values=$vpc_ID | jq -r '.Subnets[]|.SubnetId+" "+.CidrBlock+" "+(.Tags[]|select(.Key=="Name").Value)'
-echo $vpc_ID > vpc_subnet.txt
-aws ec2 describe-subnets --filter Name=vpc-id,Values=$vpc_ID | jq -r '.Subnets[]|.SubnetId+" "+.CidrBlock+" "+(.Tags[]|select(.Key=="Name").Value)' >> vpc_subnet.txt
-cat vpc_subnet.txt
+aws ec2 describe-subnets --filter Name=vpc-id,Values=$k_vpc_ID --region ap-northeast-1 | jq -r '.Subnets[]|.SubnetId+" "+.CidrBlock+" "+(.Tags[]|select(.Key=="Name").Value)'
+aws ec2 describe-subnets --filter Name=vpc-id,Values=$k_vpc_ID --region ap-northeast-1| jq -r '.Subnets[]|.SubnetId+" "+.CidrBlock+" "+(.Tags[]|select(.Key=="Name").Value)' >> k_vpc_subnet.txt
+cat k_vpc_subnet.txt
 
 # VPC, Subnet ID 환경변수 저장 
-export PublicSubnet01=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PublicSubnet01' | jq -r '.Subnets[].SubnetId')
-export PublicSubnet02=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PublicSubnet02' | jq -r '.Subnets[].SubnetId')
-export PublicSubnet03=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PublicSubnet03' | jq -r '.Subnets[].SubnetId')
-export PrivateSubnet01=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PrivateSubnet01' | jq -r '.Subnets[].SubnetId')
-export PrivateSubnet02=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PrivateSubnet02' | jq -r '.Subnets[].SubnetId')
-export PrivateSubnet03=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PrivateSubnet03' | jq -r '.Subnets[].SubnetId')
-echo "export vpc_ID=${vpc_ID}" | tee -a ~/.bash_profile
-echo "export PublicSubnet01=${PublicSubnet01}" | tee -a ~/.bash_profile
-echo "export PublicSubnet02=${PublicSubnet02}" | tee -a ~/.bash_profile
-echo "export PublicSubnet03=${PublicSubnet03}" | tee -a ~/.bash_profile
-echo "export PrivateSubnet01=${PrivateSubnet01}" | tee -a ~/.bash_profile
-echo "export PrivateSubnet02=${PrivateSubnet02}" | tee -a ~/.bash_profile
-echo "export PrivateSubnet03=${PrivateSubnet03}" | tee -a ~/.bash_profile
+export k_PublicSubnet01=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PublicSubnet01' --region ap-northeast-1 | jq -r '.Subnets[].SubnetId')
+export k_PublicSubnet02=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PublicSubnet02' --region ap-northeast-1 | jq -r '.Subnets[].SubnetId')
+export k_PublicSubnet03=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PublicSubnet03' --region ap-northeast-1 | jq -r '.Subnets[].SubnetId')
+export k_PrivateSubnet01=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PrivateSubnet01' --region ap-northeast-1 | jq -r '.Subnets[].SubnetId')
+export k_PrivateSubnet02=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PrivateSubnet02' --region ap-northeast-1 | jq -r '.Subnets[].SubnetId')
+export k_PrivateSubnet03=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=eksworkshop-PrivateSubnet03' --region ap-northeast-1 | jq -r '.Subnets[].SubnetId')
+echo "export k_vpc_ID=${k_vpc_ID}" | tee -a ~/.bash_profile
+echo "export k_PublicSubnet01=${k_PublicSubnet01}" | tee -a ~/.bash_profile
+echo "export k_PublicSubnet02=${k_PublicSubnet02}" | tee -a ~/.bash_profile
+echo "export k_PublicSubnet03=${k_PublicSubnet03}" | tee -a ~/.bash_profile
+echo "export k_PrivateSubnet01=${k_PrivateSubnet01}" | tee -a ~/.bash_profile
+echo "export k_PrivateSubnet02=${k_PrivateSubnet02}" | tee -a ~/.bash_profile
+echo "export k_PrivateSubnet03=${k_PrivateSubnet03}" | tee -a ~/.bash_profile
 
 # eks cluster 환경변수 생성 
-export ekscluster_name="eksworkshop"
+export k_ekscluster_name="eksworkshop"
 export eks_version="1.22"
 export instance_type="m5.xlarge"
 export public_selfmgmd_node="frontend-workloads"
