@@ -1,5 +1,6 @@
 #!/bin/bash
 # command ./eks_shell.sh
+# eks version 1.23
 
 cd ~/environment/
 #VPC ID export
@@ -29,7 +30,7 @@ echo "export PrivateSubnet03=${PrivateSubnet03}" | tee -a ~/.bash_profile
 
 # eks cluster 환경변수 생성 
 export ekscluster_name="eksworkshop"
-export eks_version="1.22"
+export eks_version="1.23"
 export instance_type="m5.xlarge"
 export public_selfmgmd_node="frontend-workloads"
 export private_selfmgmd_node="backend-workloads"
