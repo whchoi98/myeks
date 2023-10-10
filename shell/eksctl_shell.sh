@@ -144,9 +144,21 @@ managedNodeGroups:
         cloudWatch: true
         ebs: true
         fsx: true
-        efs: true
-        
+        efs: true        
 cloudWatch:
     clusterLogging:
         enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+iam:
+  withOIDC: false
+addons:
+- name: vpc-cni
+  attachPolicyARNs:
+    - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+- name: coredns
+  version: latest
+- name: kube-proxy
+  version: latest
+- name: aws-ebs-csi-driver
+  wellKnownPolicies:
+    ebsCSIController: true
 EOF
