@@ -212,22 +212,22 @@ Resources:
   PrivateRoute02:
     DependsOn:
     - VPCGatewayAttachment
-    - NatGateway02
+    - NatGateway01
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PrivateRouteTable02
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway02
+      NatGatewayId: !Ref NatGateway01
 
   PrivateRoute03:
     DependsOn:
     - VPCGatewayAttachment
-    - NatGateway03
+    - NatGateway01
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PrivateRouteTable03
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway03
+      NatGatewayId: !Ref NatGateway01
 
   TGWRoute01:
     DependsOn:
@@ -242,22 +242,22 @@ Resources:
   TGWRoute02:
     DependsOn:
     - VPCGatewayAttachment
-    - NatGateway02
+    - NatGateway01
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref TGWRouteTable02
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway02
+      NatGatewayId: !Ref NatGateway01
 
   TGWRoute03:
     DependsOn:
     - VPCGatewayAttachment
-    - NatGateway03
+    - NatGateway01
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref TGWRouteTable03
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway03
+      NatGatewayId: !Ref NatGateway01
 
   NatGateway01:
     DependsOn:
@@ -272,47 +272,7 @@ Resources:
       - Key: Name
         Value: !Sub '${AWS::StackName}-NatGatewayAZ1'
 
-  NatGateway02:
-    DependsOn:
-    - NatGatewayEIP2
-    - PublicSubnetB01
-    - VPCGatewayAttachment
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt 'NatGatewayEIP2.AllocationId'
-      SubnetId: !Ref PublicSubnetB01
-      Tags:
-      - Key: Name
-        Value: !Sub '${AWS::StackName}-NatGatewayAZ2'
-
-  NatGateway03:
-    DependsOn:
-    - NatGatewayEIP3
-    - PublicSubnetC01
-    - VPCGatewayAttachment
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt 'NatGatewayEIP3.AllocationId'
-      SubnetId: !Ref PublicSubnetC01
-      Tags:
-      - Key: Name
-        Value: !Sub '${AWS::StackName}-NatGatewayAZ3'
-
   NatGatewayEIP1:
-    DependsOn:
-    - VPCGatewayAttachment
-    Type: 'AWS::EC2::EIP'
-    Properties:
-      Domain: vpc
-
-  NatGatewayEIP2:
-    DependsOn:
-    - VPCGatewayAttachment
-    Type: 'AWS::EC2::EIP'
-    Properties:
-      Domain: vpc
-
-  NatGatewayEIP3:
     DependsOn:
     - VPCGatewayAttachment
     Type: 'AWS::EC2::EIP'
