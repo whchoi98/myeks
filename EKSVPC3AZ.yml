@@ -313,31 +313,31 @@ Resources:
       - Key: Name
         Value: !Sub '${AWS::StackName}-NatGatewayAZ1'
 
-  NatGateway02:
-    DependsOn:
-    - NatGatewayEIP2
-    - PublicSubnet02
-    - VPCGatewayAttachment
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt 'NatGatewayEIP2.AllocationId'
-      SubnetId: !Ref PublicSubnet02
-      Tags:
-      - Key: Name
-        Value: !Sub '${AWS::StackName}-NatGatewayAZ2'
-
-  NatGateway03:
-    DependsOn:
-    - NatGatewayEIP3
-    - PublicSubnet03
-    - VPCGatewayAttachment
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId: !GetAtt 'NatGatewayEIP3.AllocationId'
-      SubnetId: !Ref PublicSubnet03
-      Tags:
-      - Key: Name
-        Value: !Sub '${AWS::StackName}-NatGatewayAZ3'
+#  NatGateway02:
+#    DependsOn:
+#    - NatGatewayEIP2
+#    - PublicSubnet02
+#    - VPCGatewayAttachment
+#    Type: AWS::EC2::NatGateway
+#    Properties:
+#      AllocationId: !GetAtt 'NatGatewayEIP2.AllocationId'
+#      SubnetId: !Ref PublicSubnet02
+#      Tags:
+#      - Key: Name
+#        Value: !Sub '${AWS::StackName}-NatGatewayAZ2'
+#
+#  NatGateway03:
+#    DependsOn:
+#    - NatGatewayEIP3
+#    - PublicSubnet03
+#    - VPCGatewayAttachment
+#    Type: AWS::EC2::NatGateway
+#    Properties:
+#      AllocationId: !GetAtt 'NatGatewayEIP3.AllocationId'
+#      SubnetId: !Ref PublicSubnet03
+#      Tags:
+#      - Key: Name
+#        Value: !Sub '${AWS::StackName}-NatGatewayAZ3'
 
   NatGatewayEIP1:
     DependsOn:
@@ -346,19 +346,19 @@ Resources:
     Properties:
       Domain: vpc
 
-  NatGatewayEIP2:
-    DependsOn:
-    - VPCGatewayAttachment
-    Type: 'AWS::EC2::EIP'
-    Properties:
-      Domain: vpc
-
-  NatGatewayEIP3:
-    DependsOn:
-    - VPCGatewayAttachment
-    Type: 'AWS::EC2::EIP'
-    Properties:
-      Domain: vpc
+#  NatGatewayEIP2:
+#    DependsOn:
+#    - VPCGatewayAttachment
+#    Type: 'AWS::EC2::EIP'
+#    Properties:
+#      Domain: vpc
+#
+#  NatGatewayEIP3:
+#    DependsOn:
+#    - VPCGatewayAttachment
+#    Type: 'AWS::EC2::EIP'
+#    Properties:
+#      Domain: vpc
 
 ########################################################
 # Create-Security-Group : ControlPlane
@@ -514,7 +514,7 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTable02
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway02
+      NatGatewayId: !Ref NatGateway01
   
   PrivateRoute03:
     DependsOn:
@@ -524,7 +524,7 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTable03
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway03
+      NatGatewayId: !Ref NatGateway01
 ########################################################
 # Create-TGW-Subnet: TGWSubnet01,02,03
 ########################################################
