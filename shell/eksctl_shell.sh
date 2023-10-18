@@ -149,7 +149,7 @@ cloudWatch:
     clusterLogging:
         enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 iam:
-  withOIDC: false
+  withOIDC: true
 addons:
 - name: vpc-cni
   attachPolicyARNs:
