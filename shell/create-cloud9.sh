@@ -1,5 +1,4 @@
 #create-cloud9.sh
-source ./helper.sh
 
 C9_IAM_ROLE_NAME="eksworkshop-admin"
 C9_IAM_Profile_NAME="eksworkshop-admin"
