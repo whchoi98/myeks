@@ -41,7 +41,7 @@ spec:
           periodSeconds: 20
 #add nodeSelector
       nodeSelector:
-        nodegroup-type: "managed-frontend-workloads"
+        nodegroup-type: "managed-backend-workloads"
 ---
 apiVersion: v1
 kind: Service
