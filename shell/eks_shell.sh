@@ -13,13 +13,13 @@ export PrivateSubnet01_NAME=eksworkshop-PublicSubnet01
 export PrivateSubnet02_NAME=eksworkshop-PublicSubnet02
 export PrivateSubnet03_NAME=eksworkshop-PublicSubnet03
 export VPC_NAME=eksworkshop
-export vpc_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$VPC_NAME | jq -r '.Vpcs[].VpcId')
-export PublicSubnet01=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=$PublicSubnet01_NAME' | jq -r '.Subnets[].SubnetId')
-export PublicSubnet02=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=$PublicSubnet02_NAME' | jq -r '.Subnets[].SubnetId')
-export PublicSubnet03=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=$PublicSubnet03_NAME' | jq -r '.Subnets[].SubnetId')
-export PrivateSubnet01=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=$PrivateSubnet01_NAME' | jq -r '.Subnets[].SubnetId')
-export PrivateSubnet02=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=$PrivateSubnet02_NAME' | jq -r '.Subnets[].SubnetId')
-export PrivateSubnet03=$(aws ec2 describe-subnets --filters 'Name=tag:Name,Values=$PrivateSubnet03_NAME' | jq -r '.Subnets[].SubnetId')
+export vpc_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=$VPC_NAME" | jq -r '.Vpcs[].VpcId')
+export PublicSubnet01=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PublicSubnet01_NAME" | jq -r '.Subnets[].SubnetId')
+export PublicSubnet02=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PublicSubnet02_NAME" | jq -r '.Subnets[].SubnetId')
+export PublicSubnet03=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PublicSubnet03_NAME" | jq -r '.Subnets[].SubnetId')
+export PrivateSubnet01=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PrivateSubnet01_NAME" | jq -r '.Subnets[].SubnetId')
+export PrivateSubnet02=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PrivateSubnet02_NAME" | jq -r '.Subnets[].SubnetId')
+export PrivateSubnet03=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PrivateSubnet03_NAME" | jq -r '.Subnets[].SubnetId')
 echo "export vpc_ID=${vpc_ID}" | tee -a ~/.bash_profile
 echo "export PublicSubnet01=${PublicSubnet01}" | tee -a ~/.bash_profile
 echo "export PublicSubnet02=${PublicSubnet02}" | tee -a ~/.bash_profile
