@@ -71,7 +71,7 @@ nodeGroups:
     desiredCapacity: 3
     privateNetworking: true
     minSize: 3
-    maxSize: 9
+    maxSize: 6
     volumeSize: 50
     volumeType: gp3
     volumeEncrypted: true
@@ -121,7 +121,7 @@ managedNodeGroups:
     desiredCapacity: 3
     privateNetworking: true
     minSize: 3
-    maxSize: 9
+    maxSize: 6
     volumeSize: 50
     volumeType: gp3
     volumeEncrypted: true
