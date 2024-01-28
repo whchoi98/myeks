@@ -13,14 +13,14 @@ export PrivateSubnet01_NAME=eksworkshop-PublicSubnet01
 export PrivateSubnet02_NAME=eksworkshop-PublicSubnet02
 export PrivateSubnet03_NAME=eksworkshop-PublicSubnet03
 export VPC_NAME=eksworkshop
-export vpc_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=$VPC_NAME" | jq -r '.Vpcs[].VpcId')
+export VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=$VPC_NAME" | jq -r '.Vpcs[].VpcId')
 export PublicSubnet01=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PublicSubnet01_NAME" | jq -r '.Subnets[].SubnetId')
 export PublicSubnet02=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PublicSubnet02_NAME" | jq -r '.Subnets[].SubnetId')
 export PublicSubnet03=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PublicSubnet03_NAME" | jq -r '.Subnets[].SubnetId')
 export PrivateSubnet01=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PrivateSubnet01_NAME" | jq -r '.Subnets[].SubnetId')
 export PrivateSubnet02=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PrivateSubnet02_NAME" | jq -r '.Subnets[].SubnetId')
 export PrivateSubnet03=$(aws ec2 describe-subnets --filters "Name=tag:Name,Values=$PrivateSubnet03_NAME" | jq -r '.Subnets[].SubnetId')
-echo "export vpc_ID=${vpc_ID}" | tee -a ~/.bash_profile
+echo "export VPC_ID=${vpc_ID}" | tee -a ~/.bash_profile
 echo "export PublicSubnet01=${PublicSubnet01}" | tee -a ~/.bash_profile
 echo "export PublicSubnet02=${PublicSubnet02}" | tee -a ~/.bash_profile
 echo "export PublicSubnet03=${PublicSubnet03}" | tee -a ~/.bash_profile
@@ -32,21 +32,21 @@ echo "export PrivateSubnet03=${PrivateSubnet03}" | tee -a ~/.bash_profile
 echo "--------------------------"
 echo "Create environment variables for creating EKS Cluster."
 echo "--------------------------"
-export ekscluster_name="eksworkshop"
-export eks_version="1.25"
-export instance_type="m5.xlarge"
-export public_selfmgmd_node="frontend-workloads"
-export private_selfmgmd_node="backend-workloads"
-export public_mgmd_node="managed-frontend-workloads"
-export private_mgmd_node="managed-backend-workloads"
+export EKSCLUSTER_NAME="eksworkshop"
+export EKS_VERSION="1.25"
+export INSTANCE_TYPE="m5.xlarge"
+export PUBLIC_SELFMGMD_NODE="frontend-workloads"
+export PRIVATE_SELFMGMD_NODE="backend-workloads"
+export PUBLIC_MGMD_NODE="managed-frontend-workloads"
+export PRIVATE_MGMD_NODE="managed-backend-workloads"
 # export publicKeyPath="/home/ec2-user/environment/eksworkshop.pub" 
-echo "export ekscluster_name=${ekscluster_name}" | tee -a ~/.bash_profile
-echo "export eks_version=${eks_version}" | tee -a ~/.bash_profile
-echo "export instance_type=${instance_type}" | tee -a ~/.bash_profile
-echo "export public_selfmgmd_node=${public_selfmgmd_node}" | tee -a ~/.bash_profile
-echo "export private_selfmgmd_node=${private_selfmgmd_node}" | tee -a ~/.bash_profile
-echo "export public_mgmd_node=${public_mgmd_node}" | tee -a ~/.bash_profile
-echo "export private_mgmd_node=${private_mgmd_node}" | tee -a ~/.bash_profile
+echo "export EKSCLUSTER_NAME=${EKSCLUSTER_NAME}" | tee -a ~/.bash_profile
+echo "export EKS_VERSION=${EKS_VERSION}" | tee -a ~/.bash_profile
+echo "export INSTANCE_TYPE=${instance_type}" | tee -a ~/.bash_profile
+echo "export PUBLIC_SELFMGMD_NODE=${public_selfmgmd_node}" | tee -a ~/.bash_profile
+echo "export PRIVATE_SELFMGMD_NODE=${private_selfmgmd_node}" | tee -a ~/.bash_profile
+echo "export PUBLIC_MGMD_NODE=${public_mgmd_node}" | tee -a ~/.bash_profile
+echo "export PRIVATE_MGMD_NODE=${private_mgmd_node}" | tee -a ~/.bash_profile
 #echo "export publicKeyPath=${publicKeyPath}" | tee -a ~/.bash_profile
 source ~/.bash_profile
 echo "--------------------------"
