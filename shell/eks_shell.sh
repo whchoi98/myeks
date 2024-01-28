@@ -42,11 +42,11 @@ export PRIVATE_MGMD_NODE="managed-backend-workloads"
 # export publicKeyPath="/home/ec2-user/environment/eksworkshop.pub" 
 echo "export EKSCLUSTER_NAME=${EKSCLUSTER_NAME}" | tee -a ~/.bash_profile
 echo "export EKS_VERSION=${EKS_VERSION}" | tee -a ~/.bash_profile
-echo "export INSTANCE_TYPE=${instance_type}" | tee -a ~/.bash_profile
-echo "export PUBLIC_SELFMGMD_NODE=${public_selfmgmd_node}" | tee -a ~/.bash_profile
-echo "export PRIVATE_SELFMGMD_NODE=${private_selfmgmd_node}" | tee -a ~/.bash_profile
-echo "export PUBLIC_MGMD_NODE=${public_mgmd_node}" | tee -a ~/.bash_profile
-echo "export PRIVATE_MGMD_NODE=${private_mgmd_node}" | tee -a ~/.bash_profile
+echo "export INSTANCE_TYPE=${INSTANCE_TYPE}" | tee -a ~/.bash_profile
+echo "export PUBLIC_SELFMGMD_NODE=${PUBLIC_SELFMGMD_NODE}" | tee -a ~/.bash_profile
+echo "export PRIVATE_SELFMGMD_NODE=${PRIVATE_SELFMGMD_NODE}" | tee -a ~/.bash_profile
+echo "export PUBLIC_MGMD_NODE=${PUBLIC_MGMD_NODE}" | tee -a ~/.bash_profile
+echo "export PRIVATE_MGMD_NODE=${PRIVATE_MGMD_NODE}" | tee -a ~/.bash_profile
 #echo "export publicKeyPath=${publicKeyPath}" | tee -a ~/.bash_profile
 source ~/.bash_profile
 echo "--------------------------"
