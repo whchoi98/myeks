@@ -49,4 +49,7 @@ echo "export public_mgmd_node=${public_mgmd_node}" | tee -a ~/.bash_profile
 echo "export private_mgmd_node=${private_mgmd_node}" | tee -a ~/.bash_profile
 #echo "export publicKeyPath=${publicKeyPath}" | tee -a ~/.bash_profile
 source ~/.bash_profile
+echo "--------------------------"
+echo "Environment variables for EKS Cluster creation have been created in bash_profile."
+echo "--------------------------"
 
