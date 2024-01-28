@@ -7,13 +7,12 @@ cat << EOF > ~/environment/myeks/eksworkshop.yaml
 ---
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
-
 metadata:
-  name: ${ekscluster_name}
+  name: ${EKSCLUSTER_NAME}
   region: ${AWS_REGION}
-  version: "${eks_version}"  
+  version: "${EKS_VERSION}"  
 vpc: 
-  id: ${vpc_ID}
+  id: ${VPC_ID}
   subnets:
     public:
       PublicSubnet01:
@@ -40,7 +39,7 @@ secretsEncryption:
 
 nodeGroups:
   - name: ng-public-01
-    instanceType: ${instance_type}
+    instanceType: ${INSTANCE_TYPE}
     subnets:
       - ${PublicSubnet01}
       - ${PublicSubnet02}
@@ -48,14 +47,12 @@ nodeGroups:
     desiredCapacity: 3
     minSize: 3
     maxSize: 6
-    volumeSize: 200
+    volumeSize: 50
     volumeType: gp3
     volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: "${public_selfmgmd_node}"
-    ssh: 
-      publicKeyPath: "${publicKeyPath}"
+      nodegroup-type: "${PUBLIC_SELFMGMD_NODE}"
     iam:
       attachPolicyARNs:
       withAddonPolicies:
@@ -66,7 +63,7 @@ nodeGroups:
         efs: true
 
   - name: ng-private-01
-    instanceType: ${instance_type}
+    instanceType: ${INSTANCE_TYPE}
     subnets:
       - ${PrivateSubnet01}
       - ${PrivateSubnet02}
@@ -75,14 +72,12 @@ nodeGroups:
     privateNetworking: true
     minSize: 3
     maxSize: 9
-    volumeSize: 200
+    volumeSize: 50
     volumeType: gp3
     volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: "${private_selfmgmd_node}"
-    ssh: 
-      publicKeyPath: "${publicKeyPath}"
+      nodegroup-type: "${PRIVATE_SELFMGMD_NODE}"
     iam:
       attachPolicyARNs:
       withAddonPolicies:
@@ -94,7 +89,7 @@ nodeGroups:
 
 managedNodeGroups:
   - name: managed-ng-public-01
-    instanceType: ${instance_type}
+    instanceType: ${INSTANCE_TYPE}
     subnets:
       - ${PublicSubnet01}
       - ${PublicSubnet02}
@@ -102,14 +97,12 @@ managedNodeGroups:
     desiredCapacity: 3
     minSize: 3
     maxSize: 6
-    volumeSize: 200
+    volumeSize: 50
     volumeType: gp3
     volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: "${public_mgmd_node}"
-    ssh: 
-      publicKeyPath: "${publicKeyPath}"
+      nodegroup-type: "${PUBLIC_MGMD_NODE}"
     iam:
       attachPolicyARNs:
       withAddonPolicies:
@@ -120,7 +113,7 @@ managedNodeGroups:
         efs: true
         
   - name: managed-ng-private-01
-    instanceType: ${instance_type}
+    instanceType: ${INSTANCE_TYPE}
     subnets:
       - ${PrivateSubnet01}
       - ${PrivateSubnet02}
@@ -129,14 +122,12 @@ managedNodeGroups:
     privateNetworking: true
     minSize: 3
     maxSize: 9
-    volumeSize: 200
+    volumeSize: 50
     volumeType: gp3
     volumeEncrypted: true
     amiFamily: AmazonLinux2
     labels:
-      nodegroup-type: "${private_mgmd_node}"
-    ssh: 
-      publicKeyPath: "${publicKeyPath}"
+      nodegroup-type: "${PRIVATE_MGMD_NODE}"
     iam:
       attachPolicyARNs:
       withAddonPolicies:
