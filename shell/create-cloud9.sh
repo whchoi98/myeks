@@ -16,7 +16,8 @@ aws iam create-instance-profile --instance-profile-name ${C9_IAM_Profile_NAME}
 
 aws iam add-role-to-instance-profile --instance-profile-name ${C9_IAM_Profile_NAME} --role-name ${C9_IAM_ROLE_NAME}
 
-aws cloud9 create-environment-ec2 --name ${C9_NAME} --description ${C9_NAME} --instance-type "${C9_INSTANCE_TYPE}" --image-id resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64 --region $AWS_REGION --automatic-stop-time-minutes 0
+#aws cloud9 create-environment-ec2 --name ${C9_NAME} --description ${C9_NAME} --instance-type "${C9_INSTANCE_TYPE}" --image-id resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64 --region $AWS_REGION --automatic-stop-time-minutes 0
+aws cloud9 create-environment-ec2 --name ${C9_NAME} --description ${C9_NAME} --instance-type "${C9_INSTANCE_TYPE}" --image-id resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2023-x86_64 --region $AWS_REGION --automatic-stop-time-minutes 0
 
 C9_IDS=$(aws cloud9 list-environments | jq -r '.environmentIds | join(" ")')
 CLOUD9_EC2=$(aws cloud9 describe-environments --environment-ids "${C9_IDS}" | jq -r '.environments[] | select(.name == "MyCloud9") | .id')
