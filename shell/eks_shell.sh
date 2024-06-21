@@ -1,6 +1,6 @@
 #!/bin/bash
 # command ./eks_shell.sh
-# eks version 1.25
+# eks version 1.27
 
 cd ~/environment/
 echo "--------------------------"
@@ -33,8 +33,8 @@ echo "--------------------------"
 echo "Create environment variables for creating EKS Cluster."
 echo "--------------------------"
 export EKSCLUSTER_NAME="eksworkshop"
-export EKS_VERSION="1.25"
-export INSTANCE_TYPE="m5.xlarge"
+export EKS_VERSION="1.27"
+export INSTANCE_TYPE="m6i.xlarge"
 export PUBLIC_SELFMGMD_NODE="frontend-workloads"
 export PRIVATE_SELFMGMD_NODE="backend-workloads"
 export PUBLIC_MGMD_NODE="managed-frontend-workloads"
