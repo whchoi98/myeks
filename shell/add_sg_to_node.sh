@@ -17,46 +17,60 @@ fi
 echo "Security Group ID found: $SG_ID"
 # Security Group ID 확인 / Confirm Security Group ID
 
-echo "Fetching Instance ID for Node Name: $NODE_NAME..."
-# 노드 이름으로 인스턴스 ID 검색 / Get Instance ID based on Node Name
-INSTANCE_ID=$(kubectl get node "$NODE_NAME" -o jsonpath='{.spec.providerID}' | cut -d'/' -f5)
+echo "Fetching Instance IDs for Node Name: $NODE_NAME..."
+# 주어진 노드 이름에 해당하는 모든 EC2 인스턴스 ID 검색 / Get all Instance IDs for the given Node Name
+INSTANCE_IDS=$(kubectl get nodes --selector "kubernetes.io/hostname=${NODE_NAME}" -o jsonpath='{.items[*].spec.providerID}' | cut -d'/' -f5)
 
-if [ -z "$INSTANCE_ID" ]; then
-  echo "Error: Instance ID for node '${NODE_NAME}' not found."
-  echo "오류: 노드 '${NODE_NAME}'에 대한 인스턴스 ID를 찾을 수 없습니다."
+if [ -z "$INSTANCE_IDS" ]; then
+  echo "Error: No instances found for node name '${NODE_NAME}'."
+  echo "오류: 노드 이름 '${NODE_NAME}'에 해당하는 인스턴스를 찾을 수 없습니다."
   exit 1
 fi
 
-echo "Instance ID found: $INSTANCE_ID"
-# 인스턴스 ID 확인 / Confirm Instance ID
+echo "Found Instance IDs: $INSTANCE_IDS"
+# 인스턴스 ID 목록 확인 / Confirm list of Instance IDs
 
-echo "Fetching Network Interface ID for Instance ID: $INSTANCE_ID..."
-# 인스턴스 ID로 네트워크 인터페이스 ID 검색 / Get Network Interface ID
-NETWORK_INTERFACE_ID=$(aws ec2 describe-instances \
-  --instance-ids "$INSTANCE_ID" \
-  --query "Reservations[0].Instances[0].NetworkInterfaces[0].NetworkInterfaceId" \
-  --output text)
+# 모든 인스턴스에 대해 반복 / Iterate over all instances
+for INSTANCE_ID in $INSTANCE_IDS; do
+  echo "Processing Instance ID: $INSTANCE_ID..."
 
-if [ "$NETWORK_INTERFACE_ID" == "None" ]; then
-  echo "Error: Network Interface for instance '${INSTANCE_ID}' not found."
-  echo "오류: 인스턴스 '${INSTANCE_ID}'에 대한 네트워크 인터페이스를 찾을 수 없습니다."
-  exit 1
-fi
+  # 네트워크 인터페이스 ID 가져오기 / Get Network Interface ID
+  NETWORK_INTERFACE_ID=$(aws ec2 describe-instances \
+    --instance-ids "$INSTANCE_ID" \
+    --query "Reservations[0].Instances[0].NetworkInterfaces[0].NetworkInterfaceId" \
+    --output text)
 
-echo "Network Interface ID found: $NETWORK_INTERFACE_ID"
-# 네트워크 인터페이스 ID 확인 / Confirm Network Interface ID
+  if [ "$NETWORK_INTERFACE_ID" == "None" ]; then
+    echo "Error: Network Interface for instance '${INSTANCE_ID}' not found."
+    echo "오류: 인스턴스 '${INSTANCE_ID}'에 대한 네트워크 인터페이스를 찾을 수 없습니다."
+    continue
+  fi
 
-echo "Adding Security Group $SG_NAME ($SG_ID) to Network Interface $NETWORK_INTERFACE_ID..."
-# 네트워크 인터페이스에 보안 그룹 추가 / Add Security Group to Network Interface
-aws ec2 modify-network-interface-attribute \
-  --network-interface-id "$NETWORK_INTERFACE_ID" \
-  --groups "$SG_ID"
+  echo "Network Interface ID found: $NETWORK_INTERFACE_ID"
+  # 네트워크 인터페이스 ID 확인 / Confirm Network Interface ID
 
-if [ $? -eq 0 ]; then
-  echo "Security Group $SG_NAME added successfully to node $NODE_NAME."
-  echo "보안 그룹 $SG_NAME이 노드 $NODE_NAME에 성공적으로 추가되었습니다."
-else
-  echo "Error: Failed to add Security Group to node $NODE_NAME."
-  echo "오류: 노드 $NODE_NAME에 보안 그룹 추가 실패."
-  exit 1
-fi
+  # 기존 Security Group ID 가져오기 / Get current Security Groups
+  CURRENT_SG_IDS=$(aws ec2 describe-network-interfaces \
+    --network-interface-ids "$NETWORK_INTERFACE_ID" \
+    --query "NetworkInterfaces[0].Groups[*].GroupId" \
+    --output text)
+
+  echo "Current Security Groups for Instance $INSTANCE_ID: $CURRENT_SG_IDS"
+
+  # Security Group 추가 / Add Security Group
+  echo "Adding Security Group $SG_NAME ($SG_ID) to Network Interface $NETWORK_INTERFACE_ID..."
+  aws ec2 modify-network-interface-attribute \
+    --network-interface-id "$NETWORK_INTERFACE_ID" \
+    --groups $CURRENT_SG_IDS $SG_ID
+
+  if [ $? -eq 0 ]; then
+    echo "Security Group $SG_NAME added successfully to instance $INSTANCE_ID."
+    echo "보안 그룹 $SG_NAME이 인스턴스 $INSTANCE_ID에 성공적으로 추가되었습니다."
+  else
+    echo "Error: Failed to add Security Group to instance $INSTANCE_ID."
+    echo "오류: 인스턴스 $INSTANCE_ID에 보안 그룹 추가 실패."
+  fi
+done
+
+echo "Script execution completed."
+echo "스크립트 실행이 완료되었습니다."
