@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alb-ing-02
+  labels:
+    app: alb-ing-02
+#name space change 
+  namespace: alb-ing-02
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: alb-ing-02
+  template:
+    metadata:
+      labels:
+        app: alb-ing-02
+    spec:
+      containers:
+#     - image: 507115347197.dkr.ecr.ap-northeast-2.amazonaws.com/network-multitool
+      - image: whchoi98/network-multitool
+        imagePullPolicy: Always
+        name: alb-ing-02
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+#add nodeSelector
+      nodeSelector:
+        nodegroup-type: "managed-backend-workloads"
