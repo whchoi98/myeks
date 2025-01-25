@@ -118,6 +118,34 @@ nodeGroups:
   - name: ng-private-01
     # Define a self-managed private node group
     # 셀프 관리 프라이빗 노드 그룹 정의
+    instanceType: ${INSTANCE_TYPE}
+    # Instance type for the node group
+    # 노드 그룹의 인스턴스 유형
+    subnets:
+      - ${PrivateSubnet01}
+      - ${PrivateSubnet02}
+      - ${PrivateSubnet03}
+      # List the subnets for the node group
+      # 노드 그룹에 사용할 서브넷 목록
+    desiredCapacity: 3
+    # Desired number of nodes in the group
+    # 노드 그룹의 원하는 노드 수
+    minSize: 3
+    maxSize: 6
+    # Minimum and maximum node count
+    # 최소 및 최대 노드 수
+    volumeSize: 50
+    volumeType: gp3
+    volumeEncrypted: true
+    # Node volume configuration
+    # 노드 볼륨 설정
+    amiFamily: AmazonLinux2
+    # Use Amazon Linux 2 AMI
+    # Amazon Linux 2 AMI 사용
+    labels:
+      nodegroup-type: "${PRIVATE_SELFMGMD_NODE}"
+      # Label for node group
+      # 노드 그룹 레이블
     privateNetworking: true
     # Enable private networking for the node group
     # 노드 그룹에 프라이빗 네트워킹 활성화
@@ -127,19 +155,92 @@ managedNodeGroups:
     # Define a managed public node group
     # 관리형 퍼블릭 노드 그룹 정의
     instanceType: ${INSTANCE_TYPE}
+    # Instance type for the node group
+    # 노드 그룹의 인스턴스 유형
     subnets:
       - ${PublicSubnet01}
       - ${PublicSubnet02}
       - ${PublicSubnet03}
-    # Same configurations as self-managed node group
-    # 셀프 관리 노드 그룹과 동일한 설정
+      # List the subnets for the node group
+      # 노드 그룹에 사용할 서브넷 목록
+    desiredCapacity: 3
+    # Desired number of nodes in the group
+    # 노드 그룹의 원하는 노드 수
+    minSize: 3
+    maxSize: 6
+    # Minimum and maximum node count
+    # 최소 및 최대 노드 수
+    volumeSize: 50
+    volumeType: gp3
+    volumeEncrypted: true
+    # Node volume configuration
+    # 노드 볼륨 설정
+    amiFamily: AmazonLinux2
+    # Use Amazon Linux 2 AMI
+    # Amazon Linux 2 AMI 사용
+    labels:
+      nodegroup-type: "${PUBLIC_MGMD_NODE}"
+      # Label for node group
+      # 노드 그룹 레이블
+    iam:
+      attachPolicyARNs:
+      # IAM policies for the node group
+      # 노드 그룹을 위한 IAM 정책
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+        # Add-on policies for additional features
+        # 추가 기능을 위한 정책 추가
 
   - name: managed-ng-private-01
     # Define a managed private node group
     # 관리형 프라이빗 노드 그룹 정의
+    instanceType: ${INSTANCE_TYPE}
+    # Instance type for the node group
+    # 노드 그룹의 인스턴스 유형
+    subnets:
+      - ${PrivateSubnet01}
+      - ${PrivateSubnet02}
+      - ${PrivateSubnet03}
+      # List the subnets for the node group
+      # 노드 그룹에 사용할 서브넷 목록
+    desiredCapacity: 3
+    # Desired number of nodes in the group
+    # 노드 그룹의 원하는 노드 수
+    minSize: 3
+    maxSize: 6
+    # Minimum and maximum node count
+    # 최소 및 최대 노드 수
+    volumeSize: 50
+    volumeType: gp3
+    volumeEncrypted: true
+    # Node volume configuration
+    # 노드 볼륨 설정
+    amiFamily: AmazonLinux2
+    # Use Amazon Linux 2 AMI
+    # Amazon Linux 2 AMI 사용
+    labels:
+      nodegroup-type: "${PRIVATE_MGMD_NODE}"
+      # Label for node group
+      # 노드 그룹 레이블
     privateNetworking: true
     # Enable private networking for the node group
     # 노드 그룹에 프라이빗 네트워킹 활성화
+    iam:
+      attachPolicyARNs:
+      # IAM policies for the node group
+      # 노드 그룹을 위한 IAM 정책
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
+        # Add-on policies for additional features
+        # 추가 기능을 위한 정책 추가
 
 cloudWatch:
     clusterLogging:
