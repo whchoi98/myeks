@@ -18,8 +18,11 @@ echo "Security Group ID found: $SG_ID"
 # Security Group ID 확인 / Confirm Security Group ID
 
 echo "Fetching Instance IDs for Node Name: $NODE_NAME..."
-# 주어진 노드 이름에 해당하는 모든 EC2 인스턴스 ID 검색 / Get all Instance IDs for the given Node Name
-INSTANCE_IDS=$(kubectl get nodes --selector "kubernetes.io/hostname=${NODE_NAME}" -o jsonpath='{.items[*].spec.providerID}' | cut -d'/' -f5)
+# EC2 태그로 주어진 노드 이름에 해당하는 모든 EC2 인스턴스 검색 / Get all Instance IDs with the given Node Name tag
+INSTANCE_IDS=$(aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=${NODE_NAME}" \
+  --query "Reservations[].Instances[].InstanceId" \
+  --output text)
 
 if [ -z "$INSTANCE_IDS" ]; then
   echo "Error: No instances found for node name '${NODE_NAME}'."
