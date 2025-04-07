@@ -2,7 +2,7 @@
 # command ./eksctl_shell.sh
 # eksctl yaml execution
 # eksctl yaml 파일 실행 스크립트
-
+echo 'export AWS_REGION=ap-northeast-2' >> ~/.bash_profile
 source ~/.bash_profile
 # Load environment variables from bash_profile
 # bash_profile에서 환경 변수를 로드
