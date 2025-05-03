@@ -43,8 +43,8 @@ echo "✅ VPC 및 Subnet ID 환경변수 저장 완료"
 
 # 사용자로부터 EKS 버전 입력
 echo "🧭 [2/4] EKS 버전 입력 받는 중..."
-read -rp "Enter the EKS version (default: 1.29): " USER_EKS_VERSION
-EKS_VERSION="${USER_EKS_VERSION:-1.29}"
+read -rp "Enter the EKS version (default: 1.31): " USER_EKS_VERSION
+EKS_VERSION="${USER_EKS_VERSION:-1.31}"
 echo "🛠️ 선택된 EKS 버전: ${EKS_VERSION}"
 
 # EKS 관련 변수 정의
