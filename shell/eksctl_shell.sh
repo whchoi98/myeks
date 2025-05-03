@@ -1,7 +1,7 @@
 #!/bin/bash
 # eksctl_shell.sh - eksctl 기반 EKS 클러스터 yaml 생성 스크립트
 
-set -euo pipefail
+set -eo pipefail
 
 echo "🔧 [1/2] eksctl YAML 파일 생성 시작..."
 
