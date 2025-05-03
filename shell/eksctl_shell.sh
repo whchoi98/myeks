@@ -1,6 +1,22 @@
 #!/bin/bash
 # eksctl_shell.sh - eksctl 기반 EKS 클러스터 YAML 생성 스크립트
 
+REQUIRED_VARS=(
+  EKSCLUSTER_NAME AWS_REGION EKS_VERSION VPC_ID
+  PublicSubnet01 PublicSubnet02 PublicSubnet03
+  PrivateSubnet01 PrivateSubnet02 PrivateSubnet03
+  MASTER_ARN INSTANCE_TYPE
+  PUBLIC_SELFMGMD_NODE PRIVATE_SELFMGMD_NODE
+  PUBLIC_MGMD_NODE PRIVATE_MGMD_NODE
+)
+
+for var in "${REQUIRED_VARS[@]}"; do
+  if [ -z "${!var}" ]; then
+    echo "❌ 환경 변수 $var 가 정의되어 있지 않습니다."
+    exit 1
+  fi
+done
+
 set -eo pipefail
 
 echo "🔧 [1/3] eksctl YAML 파일 생성 시작..."
