@@ -12,10 +12,12 @@ echo "📛 현재 Caller ARN:"
 echo "$CALLER_ARN"
 
 # 역할 검증 (ec2vscodeserver가 포함되어야 함)
-if echo "$CALLER_ARN" | grep -q "ec2vscodeserver"; then
-  echo "✅ IAM Role 유효: ec2vscodeserver 역할이 감지되었습니다."
+#if echo "$CALLER_ARN" | grep -q "ec2vscodeserver"; then
+if echo "$CALLER_ARN" | grep -q "mgmtvpc-SSMRole"; then
+
+  echo "✅ IAM Role 유효: mgmtvpc-SSMRole 역할이 감지되었습니다."
 else
-  echo "❌ IAM Role 비정상: ec2vscodeserver 역할이 아닙니다!"
+  echo "❌ IAM Role 비정상: mgmtvpc-SSMRole 역할이 아닙니다!"
 fi
 
 echo "------------------------------------------------------"
